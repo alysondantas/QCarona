@@ -3,8 +3,13 @@ package br.com.alysondantas.qcarona.controller;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.math.BigInteger;
 import java.net.Socket;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.regex.Pattern;
+
+import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 
 /**
  * Created by alyso on 25/01/2018.
@@ -12,13 +17,20 @@ import java.util.regex.Pattern;
 
 public class controller {
 
-    private String ip;
-    private int porta;
+    private String ip = "192.168.22.102";
+    private int porta = 1099;
 
-    public boolean realizarLogin(String email, String senha) throws IOException, ClassNotFoundException {
-        //Cria o Socket para buscar o arquivo no servidor
+    public void realizarLogin(String email, String senha) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.update(senha.getBytes(), 0, senha.length());
+        String md5 = new BigInteger(1, m.digest()).toString(16);
+
+        String pack = "0|" + email + "|" + senha; //envia 0 para cadastrar o usuario e senha no protocolo
+        ThreadConexaoServidor thread = new ThreadConexaoServidor(pack, ip, porta);
+        thread.start();
+
+        /*//Cria o Socket para buscar o arquivo no servidor
         Socket rec = new Socket(ip, porta);
-        String pack = "0|" + email + "|" + senha;
 
         //Enviando o nome do arquivo a ser baixado do servidor
         ObjectOutputStream saida = new ObjectOutputStream(rec.getOutputStream());
@@ -33,6 +45,7 @@ public class controller {
             return true;
         }else{
             return false;
-        }
+        }*/
     }
 }
+
