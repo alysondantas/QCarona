@@ -26,4 +26,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+
+
+    public void realizaLogin(){
+        Intent intent = new Intent(MainActivity.this,EntrarActivity.class);
+        startActivity(intent);
+    }
 }

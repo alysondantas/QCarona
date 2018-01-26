@@ -15,10 +15,38 @@ import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
  * Created by alyso on 25/01/2018.
  */
 
-public class controller {
-
+public class Controller {
+    private static Controller unicaInstancia;//variavel do controller de unica instancia
     private String ip = "192.168.22.102";
     private int porta = 1099;
+
+    /**
+     * Contrutor privado por ser singleton
+     */
+    private Controller(){
+    }
+
+    /**
+     * controla o instanciamento de objetos Controller
+     *
+     * @return unicaInstancia
+     */
+    public static synchronized Controller getInstance() {
+        if (unicaInstancia == null) {
+            unicaInstancia = new Controller();
+        }
+        return unicaInstancia;
+    }
+
+    /**
+     * reseta o objeto Controller ja instanciado
+     */
+    public static void zerarSingleton() {
+        unicaInstancia = null;
+    }
+
+
+
 
     public void realizarLogin(String email, String senha) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
         MessageDigest m = MessageDigest.getInstance("MD5");
