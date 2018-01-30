@@ -9,6 +9,7 @@ import android.widget.Button;
 public class MainActivity extends AppCompatActivity {
 
     private Button cadastrarbutton;
+    private Button entrarbutton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -16,6 +17,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cadastrarbutton = (Button) findViewById(R.id.cadastrarbutton);
+        entrarbutton = (Button) findViewById(R.id.buttonEntrarMain);
+
+        entrarbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                realizaLogin();
+            }
+        });
 
         cadastrarbutton.setOnClickListener(new View.OnClickListener() {
             @Override

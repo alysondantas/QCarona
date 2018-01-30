@@ -2,6 +2,7 @@ package br.com.alysondantas.qcarona.threads;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 /**
@@ -12,6 +13,8 @@ public class ThreadConexaoServidor extends Thread {
     private String pack;
     private String ip;
     private int porta;
+    private boolean running = false;
+    private PrintWriter mOut;
 
     public ThreadConexaoServidor(String pack, String ip, int porta){
         this.pack = pack;
