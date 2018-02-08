@@ -1,4 +1,21 @@
 <resources>
     <string name="app_name">QCarona</string>
     <string name="textologin">Gaste pouco, chegue cedo!</string>
+    <string name="title_activity_login">Entrar</string>
+
+    <!-- Strings related to login -->
+    <string name="prompt_email">Email</string>
+    <string name="prompt_password">Senha (opcional)</string>
+    <string name="action_sign_in">Entrar ou cadastrar</string>
+    <string name="action_sign_in_short">Entrar</string>
+    <string name="error_invalid_email">Email inválido</string>
+    <string name="error_invalid_password">Senha muito pequena</string>
+    <string name="error_incorrect_password">Senha incorreta</string>
+    <string name="error_field_required">Este campo deve ser preenchido</string>
+    <string name="permission_rationale">"As permissões de contatos são necessárias para fornecer o preenchimento de e-mail."
+    </string>
+    <string name="config_servidor">Servidor</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>

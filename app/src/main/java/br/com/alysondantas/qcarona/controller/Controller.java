@@ -75,5 +75,9 @@ public class Controller {
             return false;
         }*/
     }
+
+    public void setIpServidor(String ip, int porta){
+        this.ip = ip;
+    }
 }
 
