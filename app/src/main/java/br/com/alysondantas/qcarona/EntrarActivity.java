@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -20,6 +22,8 @@ public class EntrarActivity extends AppCompatActivity {
     private EditText editTextUser;
     private EditText editTextSenha;
     private Button buttonLogin;
+    private ProgressBar progress;
+    private TextView texto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,6 +33,8 @@ public class EntrarActivity extends AppCompatActivity {
         editTextSenha = (EditText) findViewById(R.id.editTextSenhaLogin);
         editTextUser = (EditText) findViewById(R.id.editTextEmailLogin);
         buttonLogin = (Button) findViewById(R.id.buttonEntrarLogin);
+        progress = (ProgressBar) findViewById(R.id.progressBar);
+        texto = (TextView) findViewById(R.id.textViewProg);
 
         Log.i("AsyncTask", "Elementos de tela criados e atribuidos Thread: " + Thread.currentThread().getName());
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -60,8 +66,10 @@ public class EntrarActivity extends AppCompatActivity {
         try {
             email = editTextUser.getText().toString();
             senha = editTextSenha.getText().toString();
-            Context contexto = getApplicationContext();
-            controller.realizarLogin2(email,senha,contexto);
+            editTextUser.setEnabled(false);
+            editTextSenha.setEnabled(false);
+            controller.realizarLogin(email,senha,this, progress,texto, editTextSenha,editTextUser);
+
 
         } catch (IOException e) {
             e.printStackTrace();

@@ -2,6 +2,7 @@
     <string name="app_name">QCarona</string>
     <string name="textologin">Gaste pouco, chegue cedo!</string>
     <string name="title_activity_login">Entrar</string>
+    <string name="userousenhainvalido">Usuário ou senha invalido.</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

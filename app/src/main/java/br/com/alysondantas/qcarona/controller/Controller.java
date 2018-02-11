@@ -2,6 +2,9 @@ package br.com.alysondantas.qcarona.controller;
 
 import android.content.Context;
 import android.util.Log;
+import android.widget.EditText;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -48,25 +51,7 @@ public class Controller {
     }
 
 
-
-
-    public void realizarLogin(String email, String senha, Context contexto) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
-        Toast toast = Toast.makeText(contexto, "Realizando Login, aguarde.",Toast.LENGTH_SHORT);
-        toast.show();
-        MessageDigest m = MessageDigest.getInstance("MD5");
-        m.update(senha.getBytes(), 0, senha.length());
-        String md5 = new BigInteger(1, m.digest()).toString(16);
-
-        String pack = "0|" + email + "|" + md5; //envia 0 para cadastrar o usuario e senha no protocolo
-
-        ThreadConexaoServidor thread = new ThreadConexaoServidor(pack, ip, porta);
-        thread.start();
-        toast = Toast.makeText(contexto, "Conexão iniciada, aguarde." + pack,Toast.LENGTH_SHORT);
-        toast.show();
-
-    }
-
-    public void realizarLogin2(String email, String senha, Context contexto) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
+    public void realizarLogin(String email, String senha, Context contexto, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
         Toast toast = Toast.makeText(contexto, "Realizando Login, aguarde.",Toast.LENGTH_SHORT);
         toast.show();
         this.context = contexto;
@@ -78,8 +63,8 @@ public class Controller {
 
         String pack = "0|" + email + "|" + md5; //envia 0 para cadastrar o usuario e senha no protocolo
 
-        AsyncTaskRealizaLogin envia = new AsyncTaskRealizaLogin();
-        Log.i("AsyncTask", "AsyncTask senado chamado Thread: " + Thread.currentThread().getName());
+        AsyncTaskRealizaLogin envia = new AsyncTaskRealizaLogin(contexto, progressBar, texto, editTextSenha,editTextUser);
+        Log.i("AsyncRealizaLogin", "AsyncTask senado chamado Thread: " + Thread.currentThread().getName());
         String[] parametros = new String[3];
         parametros[0] = ip;
         parametros[1] = porta+"";
