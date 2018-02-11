@@ -1,17 +1,15 @@
 package br.com.alysondantas.qcarona.controller;
 
 import android.content.Context;
+import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.math.BigInteger;
-import java.net.Socket;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.regex.Pattern;
 
+import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
 import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 
 /**
@@ -22,6 +20,7 @@ public class Controller {
     private static Controller unicaInstancia;//variavel do controller de unica instancia
     private String ip = "192.168.22.105";
     private int porta = 1099;
+    private Context context;
 
     /**
      * Contrutor privado por ser singleton
@@ -59,52 +58,45 @@ public class Controller {
         String md5 = new BigInteger(1, m.digest()).toString(16);
 
         String pack = "0|" + email + "|" + md5; //envia 0 para cadastrar o usuario e senha no protocolo
-        /*try {
-            Socket socket = null;
-            ObjectOutputStream canalSaida = null;
-            ObjectInputStream canalEntrada = null;
 
-            socket = new Socket(ip, porta);
-
-            toast = Toast.makeText(contexto, "enviando algo, aguarde." + pack,Toast.LENGTH_SHORT);
-            toast.show();
-            canalSaida = new ObjectOutputStream(socket.getOutputStream());
-            canalSaida.writeObject("Envio");
-
-
-            canalEntrada = new ObjectInputStream(socket.getInputStream());
-            Object object = canalEntrada.readObject();
-            if ((object != null) && (object instanceof String)) {
-                toast = Toast.makeText(contexto, "recebeu algo, aguarde." + pack,Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        } catch (Exception e) {
-            //FIXME Tratar a Exception.
-            e.printStackTrace();
-        }*/
         ThreadConexaoServidor thread = new ThreadConexaoServidor(pack, ip, porta);
         thread.start();
         toast = Toast.makeText(contexto, "Conexão iniciada, aguarde." + pack,Toast.LENGTH_SHORT);
         toast.show();
 
-        /*//Cria o Socket para buscar o arquivo no servidor
-        Socket rec = new Socket(ip, porta);
-
-        //Enviando o nome do arquivo a ser baixado do servidor
-        ObjectOutputStream saida = new ObjectOutputStream(rec.getOutputStream());
-        saida.writeObject(pack);
-        saida.flush();
-
-
-        ObjectInputStream entrada = new ObjectInputStream(rec.getInputStream());
-        String recebido = (String) entrada.readObject();//obtem o que foi recebido
-        String[] informacoes = recebido.split(Pattern.quote("|"));//fragmenta as informações
-        if(informacoes[0].equals("3")) {//se for 0
-            return true;
-        }else{
-            return false;
-        }*/
     }
+
+    public void realizarLogin2(String email, String senha, Context contexto) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
+        Toast toast = Toast.makeText(contexto, "Realizando Login, aguarde.",Toast.LENGTH_SHORT);
+        toast.show();
+        this.context = contexto;
+
+
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.update(senha.getBytes(), 0, senha.length());
+        String md5 = new BigInteger(1, m.digest()).toString(16);
+
+        String pack = "0|" + email + "|" + md5; //envia 0 para cadastrar o usuario e senha no protocolo
+
+        AsyncTaskRealizaLogin envia = new AsyncTaskRealizaLogin();
+        Log.i("AsyncTask", "AsyncTask senado chamado Thread: " + Thread.currentThread().getName());
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        envia.execute(parametros);
+
+        /*ThreadConexaoServidor thread = new ThreadConexaoServidor(pack, ip, porta);
+        thread.start();
+        toast = Toast.makeText(contexto, "Conexão iniciada, aguarde." + pack,Toast.LENGTH_SHORT);
+        toast.show();*/
+
+    }
+
+    public Context getAtualContext(){
+        return this.context;
+    }
+
 
     public void setIpServidor(String ip, int porta){
         this.ip = ip;

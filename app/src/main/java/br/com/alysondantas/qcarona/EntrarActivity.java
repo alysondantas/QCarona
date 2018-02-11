@@ -3,6 +3,7 @@ package br.com.alysondantas.qcarona;
 import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -29,15 +30,30 @@ public class EntrarActivity extends AppCompatActivity {
         editTextUser = (EditText) findViewById(R.id.editTextEmailLogin);
         buttonLogin = (Button) findViewById(R.id.buttonEntrarLogin);
 
-
-
+        Log.i("AsyncTask", "Elementos de tela criados e atribuidos Thread: " + Thread.currentThread().getName());
         buttonLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Log.i("AsyncTask", "Botão Clicado Thread: " + Thread.currentThread().getName());
+                realizaLogin();
+            }
+        });
+
+
+
+        /*buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 realizaLogin();
             }
-        });
+        });*/
     }
+
+    /*private void chamarAsyncTask(String endereco){
+        TarefaDownload download = new TarefaDownload();
+        Log.i("AsyncTask", "AsyncTask senado chamado Thread: " + Thread.currentThread().getName());
+        download.execute(endereco);
+    }*/
 
 
     public void realizaLogin(){
@@ -45,7 +61,7 @@ public class EntrarActivity extends AppCompatActivity {
             email = editTextUser.getText().toString();
             senha = editTextSenha.getText().toString();
             Context contexto = getApplicationContext();
-            controller.realizarLogin(email,senha,contexto);
+            controller.realizarLogin2(email,senha,contexto);
 
         } catch (IOException e) {
             e.printStackTrace();
