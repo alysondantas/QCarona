@@ -1,5 +1,8 @@
 package br.com.alysondantas.qcarona.controller;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -17,7 +20,7 @@ import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 
 public class Controller {
     private static Controller unicaInstancia;//variavel do controller de unica instancia
-    private String ip = "192.168.22.102";
+    private String ip = "192.168.22.105";
     private int porta = 1099;
 
     /**
@@ -48,14 +51,41 @@ public class Controller {
 
 
 
-    public void realizarLogin(String email, String senha) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
+    public void realizarLogin(String email, String senha, Context contexto) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
+        Toast toast = Toast.makeText(contexto, "Realizando Login, aguarde.",Toast.LENGTH_SHORT);
+        toast.show();
         MessageDigest m = MessageDigest.getInstance("MD5");
         m.update(senha.getBytes(), 0, senha.length());
         String md5 = new BigInteger(1, m.digest()).toString(16);
 
-        String pack = "0|" + email + "|" + senha; //envia 0 para cadastrar o usuario e senha no protocolo
+        String pack = "0|" + email + "|" + md5; //envia 0 para cadastrar o usuario e senha no protocolo
+        /*try {
+            Socket socket = null;
+            ObjectOutputStream canalSaida = null;
+            ObjectInputStream canalEntrada = null;
+
+            socket = new Socket(ip, porta);
+
+            toast = Toast.makeText(contexto, "enviando algo, aguarde." + pack,Toast.LENGTH_SHORT);
+            toast.show();
+            canalSaida = new ObjectOutputStream(socket.getOutputStream());
+            canalSaida.writeObject("Envio");
+
+
+            canalEntrada = new ObjectInputStream(socket.getInputStream());
+            Object object = canalEntrada.readObject();
+            if ((object != null) && (object instanceof String)) {
+                toast = Toast.makeText(contexto, "recebeu algo, aguarde." + pack,Toast.LENGTH_SHORT);
+                toast.show();
+            }
+        } catch (Exception e) {
+            //FIXME Tratar a Exception.
+            e.printStackTrace();
+        }*/
         ThreadConexaoServidor thread = new ThreadConexaoServidor(pack, ip, porta);
         thread.start();
+        toast = Toast.makeText(contexto, "Conexão iniciada, aguarde." + pack,Toast.LENGTH_SHORT);
+        toast.show();
 
         /*//Cria o Socket para buscar o arquivo no servidor
         Socket rec = new Socket(ip, porta);

@@ -1,5 +1,6 @@
 package br.com.alysondantas.qcarona;
 
+import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -28,6 +29,8 @@ public class EntrarActivity extends AppCompatActivity {
         editTextUser = (EditText) findViewById(R.id.editTextEmailLogin);
         buttonLogin = (Button) findViewById(R.id.buttonEntrarLogin);
 
+
+
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -41,8 +44,8 @@ public class EntrarActivity extends AppCompatActivity {
         try {
             email = editTextUser.getText().toString();
             senha = editTextSenha.getText().toString();
-
-            controller.realizarLogin(email,senha);
+            Context contexto = getApplicationContext();
+            controller.realizarLogin(email,senha,contexto);
 
         } catch (IOException e) {
             e.printStackTrace();
