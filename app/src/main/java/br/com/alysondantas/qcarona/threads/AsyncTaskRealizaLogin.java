@@ -9,6 +9,7 @@ import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -38,14 +39,16 @@ public class AsyncTaskRealizaLogin extends AsyncTask<String, Object, String> {
     private EditText editTextUser;
     private Context context;
     private Controller controller;
+    private Button button;
 
-    public AsyncTaskRealizaLogin(Context context, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser) {
+    public AsyncTaskRealizaLogin(Context context, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser, Button button) {
         this.progressBar = progressBar;
         this.texto = texto;
         this.editTextSenha = editTextSenha;
         this.editTextUser = editTextUser;
         this.context = context;
         controller = Controller.getInstance();
+        this.button = button;
     }
 
     @Override
@@ -105,6 +108,7 @@ public class AsyncTaskRealizaLogin extends AsyncTask<String, Object, String> {
                 progressBar.setProgress(0);
                 editTextUser.setEnabled(true);
                 editTextSenha.setEnabled(true);
+                button.setEnabled(true);
                 Toast toast = Toast.makeText(context, "Usuário ou senha invalido.",Toast.LENGTH_SHORT);
                 toast.show();
             }else{

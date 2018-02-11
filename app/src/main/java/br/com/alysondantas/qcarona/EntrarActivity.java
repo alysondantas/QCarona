@@ -71,7 +71,8 @@ public class EntrarActivity extends AppCompatActivity {
             senha = editTextSenha.getText().toString();
             editTextUser.setEnabled(false);
             editTextSenha.setEnabled(false);
-            controller.realizarLogin(email,senha,this, progress,texto, editTextSenha,editTextUser);
+            buttonLogin.setEnabled(false);
+            controller.realizarLogin(email,senha,this, progress,texto, editTextSenha,editTextUser,buttonLogin);
 
 
         } catch (IOException e) {

@@ -61,7 +61,7 @@ public class Controller {
     }
 
 
-    public void realizarLogin(String email, String senha, Context contexto, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
+    public void realizarLogin(String email, String senha, Context contexto, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser, Button button) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
         Toast toast = Toast.makeText(contexto, "Realizando Login, aguarde.",Toast.LENGTH_SHORT);
         toast.show();
         this.context = contexto;
@@ -75,7 +75,7 @@ public class Controller {
         this.user = email;
         this.senha = md5;
 
-        AsyncTaskRealizaLogin envia = new AsyncTaskRealizaLogin(contexto, progressBar, texto, editTextSenha,editTextUser);
+        AsyncTaskRealizaLogin envia = new AsyncTaskRealizaLogin(contexto, progressBar, texto, editTextSenha,editTextUser, button);
         Log.i("AsyncRealizaLogin", "AsyncTask senado chamado Thread: " + Thread.currentThread().getName());
         String[] parametros = new String[3];
         parametros[0] = ip;
