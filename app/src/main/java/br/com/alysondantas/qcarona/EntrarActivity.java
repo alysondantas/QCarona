@@ -1,6 +1,8 @@
 package br.com.alysondantas.qcarona;
 
 import android.content.Context;
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -35,6 +37,7 @@ public class EntrarActivity extends AppCompatActivity {
         buttonLogin = (Button) findViewById(R.id.buttonEntrarLogin);
         progress = (ProgressBar) findViewById(R.id.progressBar);
         texto = (TextView) findViewById(R.id.textViewProg);
+
 
         Log.i("AsyncTask", "Elementos de tela criados e atribuidos Thread: " + Thread.currentThread().getName());
         buttonLogin.setOnClickListener(new View.OnClickListener() {
@@ -78,5 +81,10 @@ public class EntrarActivity extends AppCompatActivity {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
+    }
+
+    public void acessoliberado(){
+        Intent intent = new Intent(this, AreaRestritaActivity.class);
+        startActivity(intent);
     }
 }
