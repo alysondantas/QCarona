@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import br.com.alysondantas.qcarona.AreaRestritaActivity;
+import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
 import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
@@ -99,6 +101,22 @@ public class Controller {
 
         AsyncTaskLoginWakeup envia = new AsyncTaskLoginWakeup(contexto);
         Log.i("AsyncLoginWakeup", "AsyncLoginWakeup senado chamado Thread: " + Thread.currentThread().getName());
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        envia.execute(parametros);
+    }
+
+    public void cadastra(Context context, String nome, String sobrenome, String email, String senha, String data, String tel, String cep , ProgressBar progressBar, Button button) throws NoSuchAlgorithmException {
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.update(senha.getBytes(), 0, senha.length());
+        String md5 = new BigInteger(1, m.digest()).toString(16);
+
+        String pack = "1|" + nome + "|" + sobrenome + "|" + email + "|" + md5 + "|" + data + "|" + tel + "|" + cep;
+
+        AsyncTaskCadastra envia = new AsyncTaskCadastra(context, progressBar, button);
+        Log.i("AsyncCadastra", "AsyncTaskCadastra senado chamado Thread: " + Thread.currentThread().getName());
         String[] parametros = new String[3];
         parametros[0] = ip;
         parametros[1] = porta+"";

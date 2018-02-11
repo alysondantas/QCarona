@@ -23,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         cadastrarbutton = (Button) findViewById(R.id.cadastrarbutton);
-        entrarbutton = (Button) findViewById(R.id.buttonEntrarMain);
+        entrarbutton = (Button) findViewById(R.id.buttonCadCad);
 
         entrarbutton.setOnClickListener(new View.OnClickListener() {
             @Override

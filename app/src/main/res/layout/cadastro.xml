@@ -7,7 +7,7 @@
     android:background="@drawable/fundo2">
 
     <EditText
-        android:id="@+id/editText"
+        android:id="@+id/editTextCadNome"
         android:layout_width="170dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
@@ -35,7 +35,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/editText5"
+        android:id="@+id/editTextCadEmail"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -46,10 +46,10 @@
         android:textAlignment="center"
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCadNome" />
 
     <EditText
-        android:id="@+id/editText6"
+        android:id="@+id/editTextCadTel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -62,10 +62,10 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText5" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCadEmail" />
 
     <EditText
-        android:id="@+id/editText7"
+        android:id="@+id/editTextCadCEP"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -78,7 +78,7 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText6" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCadTel" />
 
     <EditText
         android:id="@+id/editText8"
@@ -94,10 +94,10 @@
         android:textColor="@color/colorPrimaryDark"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editText7" />
+        app:layout_constraintTop_toBottomOf="@+id/editTextCadCEP" />
 
     <Button
-        android:id="@+id/buttonEntrarMain"
+        android:id="@+id/buttonCadCad"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="156dp"

@@ -4,6 +4,15 @@
     <string name="title_activity_login">Entrar</string>
     <string name="userousenhainvalido">Usuário ou senha invalido.</string>
 
+    <string name="nome">Nome:</string>
+    <string name="sobrenome">Sobrenome:</string>
+    <string name="email">Email:</string>
+    <string name="senha">Senha:</string>
+    <string name="senha2">Senha Novamente:</string>
+    <string name="datanasc">Data Nascimento</string>
+    <string name="cep">CEP</string>
+    <string name="tel">Telefone</string>
+
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Senha (opcional)</string>
