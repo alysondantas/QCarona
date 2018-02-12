@@ -20,6 +20,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -29,11 +30,21 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import java.io.IOException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.alysondantas.qcarona.Exception.ErroInexperadoException;
+import br.com.alysondantas.qcarona.Exception.SenhaIncorretaException;
+import br.com.alysondantas.qcarona.Exception.UsuarioNaoCadastradoException;
+import br.com.alysondantas.qcarona.controller.Controller;
+import br.com.alysondantas.qcarona.controller.ControllerComunicacao;
+
+import static android.Manifest.permission.INTERNET;
 import static android.Manifest.permission.READ_CONTACTS;
 
 /**
@@ -304,10 +315,11 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
      * Represents an asynchronous login/registration task used to authenticate
      * the user.
      */
-    public class UserLoginTask extends AsyncTask<Void, Void, Boolean> {
+    public class UserLoginTask extends AsyncTask<Void, Void, String> {
 
         private final String mEmail;
         private final String mPassword;
+        private Controller controller;
 
         UserLoginTask(String email, String password) {
             mEmail = email;
@@ -315,36 +327,62 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         }
 
         @Override
-        protected Boolean doInBackground(Void... params) {
-            // TODO: attempt authentication against a network service.
+        protected void onPreExecute() {
+            controller = Controller.getInstance();
+        }
 
+        @Override
+        protected String doInBackground(Void... params) {
+            // TODO: attempt authentication against a network service.
+            boolean userConectado = false;
             try {
-                // Simulate network access.
-                Thread.sleep(2000);
-            } catch (InterruptedException e) {
-                return false;
+                userConectado = controller.realizarLogin(mEmail, mPassword);
+                if (userConectado){
+                    return "L"; // <- Retorna "L" para informar que o usuario fez login
+                }
+            } catch (NoSuchAlgorithmException | IOException | ClassNotFoundException e) {
+                return null;
+            } catch (UsuarioNaoCadastradoException e) {
+                return "C"; // <- Envia "C" para onPostExecute para informar que usuario nao cadastrado.
+            } catch (SenhaIncorretaException e) {
+                return "ES"; // <- Envia "ES" (Erro Senha) para informa que a senha esta incorreta.
+            } catch (ErroInexperadoException e) {
+                Toast.makeText(getApplicationContext(), "Desculpe. Houve uma erro, mas não sabemos o que aconteceu. Tente novamente", Toast.LENGTH_LONG).show();
             }
 
-            for (String credential : DUMMY_CREDENTIALS) {
+            /*for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");
                 if (pieces[0].equals(mEmail)) {
                     // Account exists, return true if the password matches.
                     return pieces[1].equals(mPassword);
                 }
-            }
+            }*/
 
-            // TODO: register the new account here.
-            return true;
+            return null;
         }
 
         @Override
-        protected void onPostExecute(final Boolean success) {
+        protected void onPostExecute(final String success) {
             mAuthTask = null;
             showProgress(false);
 
-            if (success) {
+            if (success == null) {
+                Toast.makeText(getApplicationContext(),"Ocorreu um erro não informado. Tente novamente", Toast.LENGTH_SHORT).show();
+            } else if(success == "C"){
+                Log.d("Login", "Foi recebido C, logo usuario precisa se cadastrar");
+                Toast.makeText(getApplicationContext(),"Você ainda nao está cadastrado no sistema. Cadastre agora.", Toast.LENGTH_LONG).show();
+                Log.d("Login", "Abrindo tela de cadastro");
+                Intent intent = new Intent(LoginActivity.this, CadastrarActivity.class);
+                startActivity(intent);
                 finish();
-            } else {
+            } else if(success == "L"){
+                Log.d("Login", "Foi recebido L, logo o usuario conseguiu se conectar");
+                Toast.makeText(getApplicationContext(),"Login realizado com sucesso.", Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(LoginActivity.this, PrincipalActivity.class);
+                startActivity(intent);
+                finish();
+            } else if(success == "ES"){
+                Log.d("Login", "Erro na senha.");
                 mPasswordView.setError(getString(R.string.error_incorrect_password));
                 mPasswordView.requestFocus();
             }

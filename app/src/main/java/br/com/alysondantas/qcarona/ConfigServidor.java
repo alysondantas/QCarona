@@ -7,6 +7,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import java.io.IOException;
+
 import br.com.alysondantas.qcarona.controller.Controller;
 
 public class ConfigServidor extends AppCompatActivity {
@@ -27,7 +29,14 @@ public class ConfigServidor extends AppCompatActivity {
 
     public void conectarServidor(View view){
         String ip = editTextIPServidor.getText().toString().trim();
-        controller.setIpServidor(ip, 1099);
+        try {
+            controller.setIpServidor(ip, 1099);
+            controller.conectar();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(getApplicationContext(),"Nao foi possivel conectar ao servidor. Verifique a conexão.", Toast.LENGTH_SHORT).show();
+        }
         Toast.makeText(getApplicationContext(),"O servidor principal foi mudado para " + ip + ".",Toast.LENGTH_SHORT).show();
+        finish();
     }
 }
