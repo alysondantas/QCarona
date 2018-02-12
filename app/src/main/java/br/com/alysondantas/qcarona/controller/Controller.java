@@ -27,7 +27,8 @@ import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 
 public class Controller {
     private static Controller unicaInstancia;//variavel do controller de unica instancia
-    private String ip = "149.56.200.229";
+    //private String ip = "149.56.200.229";
+    private String ip = "192.168.22.105";
     private int porta = 1099;
     private Context context;
     private final static String ARQUIVO_PREFERENCIA = "Login";
@@ -108,14 +109,14 @@ public class Controller {
         envia.execute(parametros);
     }
 
-    public void cadastra(Context context, String nome, String sobrenome, String email, String senha, String data, String tel, String cep , ProgressBar progressBar, Button button) throws NoSuchAlgorithmException {
+    public void cadastra(Context context, String nome, String sobrenome, String email, String senha, String data, String tel, String cep , ProgressBar progressBar, Button button, TextView textView) throws NoSuchAlgorithmException {
         MessageDigest m = MessageDigest.getInstance("MD5");
         m.update(senha.getBytes(), 0, senha.length());
         String md5 = new BigInteger(1, m.digest()).toString(16);
 
         String pack = "1|" + nome + "|" + sobrenome + "|" + email + "|" + md5 + "|" + data + "|" + tel + "|" + cep;
 
-        AsyncTaskCadastra envia = new AsyncTaskCadastra(context, progressBar, button);
+        AsyncTaskCadastra envia = new AsyncTaskCadastra(context, progressBar, button, textView);
         Log.i("AsyncCadastra", "AsyncTaskCadastra senado chamado Thread: " + Thread.currentThread().getName());
         String[] parametros = new String[3];
         parametros[0] = ip;

@@ -2,6 +2,7 @@
     <string name="app_name">QCarona</string>
     <string name="textologin">Gaste pouco, chegue cedo!</string>
     <string name="title_activity_login">Entrar</string>
+    <string name="cadastrar">Cadastrar</string>
     <string name="userousenhainvalido">Usuário ou senha invalido.</string>
 
     <string name="nome">Nome:</string>
@@ -12,6 +13,21 @@
     <string name="datanasc">Data Nascimento</string>
     <string name="cep">CEP</string>
     <string name="tel">Telefone</string>
+
+    <!-- Strings Cadastrar Novo -->
+    <string name="bemvindocad">Bem vindo! Qual o seu Nome?</string>
+    <string name="qualsobrenome">E qual é o seu Sobrenome?</string>
+    <string name="digaemail">Vamos facilitar o contato! Qual o seu Email?</string>
+    <string name="digasenha">Sem contar a ninguem! Me diga sua senha?</string>
+    <string name="senhanovamente">Confirma a senha ai... Não entendi da primeira vez!</string>
+    <string name="digatel">Opa! E se seu celular?</string>
+    <string name="digacep">Quase acabando... Qual seu cep?</string>
+    <string name="digadata">Só mais esse. Qual a sua data de nascimento?</string>
+    <string name="aguardar">Só um momentinho... estou cadastrando você!</string>
+    <string name="opserrocad">Ops, Coloque seu nome novamente!</string>
+
+    <string name="proximo">Proximo</string>
+    <string name="anterior">Anterior</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>

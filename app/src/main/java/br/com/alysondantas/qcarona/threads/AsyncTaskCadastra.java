@@ -20,6 +20,7 @@ import java.util.regex.Pattern;
 
 import br.com.alysondantas.qcarona.AreaRestritaActivity;
 import br.com.alysondantas.qcarona.EntrarActivity;
+import br.com.alysondantas.qcarona.R;
 import br.com.alysondantas.qcarona.controller.Controller;
 
 /**
@@ -33,12 +34,14 @@ public class AsyncTaskCadastra extends AsyncTask<String, Object, String> {
     private static int PROGRESSO = 25;
     private Context context;
     private Controller controller;
+    private TextView textView;
 
-    public AsyncTaskCadastra(Context context, ProgressBar progressBar, Button button) {
+    public AsyncTaskCadastra(Context context, ProgressBar progressBar, Button button, TextView textView) {
         this.progressBar = progressBar;
         this.context = context;
         controller = Controller.getInstance();
         this.button = button;
+        this.textView = textView;
     }
 
     @Override
@@ -108,7 +111,9 @@ public class AsyncTaskCadastra extends AsyncTask<String, Object, String> {
                     Toast toast = Toast.makeText(context, "Erro para realizar cadastro, usuário já cadastrado.",Toast.LENGTH_SHORT);
                     toast.show();
                     progressBar.setProgress(0);
+                    button.setText(R.string.proximo);
                     button.setEnabled(true);
+                    textView.setText(R.string.opserrocad);
                 }else{
                     progressBar.setProgress(0);
                     button.setEnabled(true);

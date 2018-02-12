@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.security.NoSuchAlgorithmException;
@@ -24,6 +25,7 @@ public class CadastrarActivity extends AppCompatActivity {
     private Button buttonCad;
     private Controller controller;
     private ProgressBar progressBar;
+    private TextView textView;
 
 
     @Override
@@ -42,6 +44,7 @@ public class CadastrarActivity extends AppCompatActivity {
         buttonCad = findViewById(R.id.buttonCadCad);
         controller = Controller.getInstance();
         progressBar = findViewById(R.id.progressBarCad);
+        textView = findViewById(R.id.textView2);
 
         buttonCad.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -62,7 +65,7 @@ public class CadastrarActivity extends AppCompatActivity {
             toast.show();
         }else{
             try {
-                controller.cadastra(this,editTextNome.getText().toString(),editTextSobrenome.getText().toString(),editTextEmail.getText().toString(),editTextSenha.getText().toString(),editTextData.getText().toString(),editTextTel.getText().toString(),editTextCEP.getText().toString(), progressBar, buttonCad);
+                controller.cadastra(this,editTextNome.getText().toString(),editTextSobrenome.getText().toString(),editTextEmail.getText().toString(),editTextSenha.getText().toString(),editTextData.getText().toString(),editTextTel.getText().toString(),editTextCEP.getText().toString(), progressBar, buttonCad, textView);
             } catch (NoSuchAlgorithmException e) {
                 e.printStackTrace();
             }

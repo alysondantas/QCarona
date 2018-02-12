@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
         cadastrarbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,CadastrarActivity.class);
+                Intent intent = new Intent(MainActivity.this,CadastrarNovoActivity.class);
                 startActivity(intent);
 
             }
