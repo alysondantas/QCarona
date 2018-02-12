@@ -2,6 +2,16 @@
     <string name="app_name">QCarona</string>
     <string name="textologin">Gaste pouco, chegue cedo!</string>
     <string name="title_activity_login">Entrar</string>
+    <string name="userousenhainvalido">Usuário ou senha invalido.</string>
+
+    <string name="nome">Nome:</string>
+    <string name="sobrenome">Sobrenome:</string>
+    <string name="email">Email:</string>
+    <string name="senha">Senha:</string>
+    <string name="senha2">Senha Novamente:</string>
+    <string name="datanasc">Data Nascimento</string>
+    <string name="cep">CEP</string>
+    <string name="tel">Telefone</string>
 
     <!-- Strings related to login -->
     <string name="prompt_email">Email</string>
@@ -18,10 +28,17 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+<<<<<<< HEAD
     <string name="title_activity_principal">PrincipalActivity</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
+=======
+    <string name="title_activity_area_restrita">AreaRestritaActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+>>>>>>> c5348e22f34babf343e7362e3a357b714147bc08
 </resources>
