@@ -28,7 +28,7 @@ public class ConfigServidor extends AppCompatActivity {
     }
 
     public void conectarServidor(View view){
-        String ip = editTextIPServidor.getText().toString().trim();
+        /*String ip = editTextIPServidor.getText().toString().trim();
         try {
             controller.setIpServidor(ip, 1099);
             controller.conectar();
@@ -37,6 +37,6 @@ public class ConfigServidor extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),"Nao foi possivel conectar ao servidor. Verifique a conexão.", Toast.LENGTH_SHORT).show();
         }
         Toast.makeText(getApplicationContext(),"O servidor principal foi mudado para " + ip + ".",Toast.LENGTH_SHORT).show();
-        finish();
+        finish();*/
     }
 }

@@ -30,14 +30,9 @@
             android:label="@string/title_activity_login" />
         <activity android:name=".ConfigServidor" />
         <activity
-<<<<<<< HEAD
-            android:name=".PrincipalActivity"
-            android:label="@string/title_activity_principal"
-            android:theme="@style/AppTheme"></activity>
-=======
             android:name=".AreaRestritaActivity"
-            android:label="@string/title_activity_area_restrita"></activity>
->>>>>>> c5348e22f34babf343e7362e3a357b714147bc08
-    </application>
+            android:label="@string/title_activity_area_restrita" />
+        <activity android:name=".CadastrarNovoActivity"></activity>
+</application>
 
 </manifest>

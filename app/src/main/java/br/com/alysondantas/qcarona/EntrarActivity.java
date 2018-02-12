@@ -9,12 +9,9 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-<<<<<<< HEAD
 import android.widget.Toast;
-=======
 import android.widget.ProgressBar;
 import android.widget.TextView;
->>>>>>> c5348e22f34babf343e7362e3a357b714147bc08
 
 import java.io.IOException;
 import java.security.NoSuchAlgorithmException;
@@ -87,12 +84,6 @@ public class EntrarActivity extends AppCompatActivity {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
-        } catch (SenhaIncorretaException e) {
-            e.printStackTrace();
-        } catch (UsuarioNaoCadastradoException e) {
-            e.printStackTrace();
-        } catch (ErroInexperadoException e) {
             e.printStackTrace();
         }
     }

@@ -336,12 +336,16 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
         protected String doInBackground(Void... params) {
             // TODO: attempt authentication against a network service.
             boolean userConectado = false;
+            //try {
             try {
-                userConectado = controller.realizarLogin(mEmail, mPassword);
-                if (userConectado){
+                controller.realizaLoginWakeup(mEmail, mPassword, LoginActivity.this);
+            } catch (NoSuchAlgorithmException e) {
+                e.printStackTrace();
+            }
+            if (userConectado){
                     return "L"; // <- Retorna "L" para informar que o usuario fez login
                 }
-            } catch (NoSuchAlgorithmException | IOException | ClassNotFoundException e) {
+            /*} catch (NoSuchAlgorithmException | IOException | ClassNotFoundException e) {
                 return null;
             } catch (UsuarioNaoCadastradoException e) {
                 return "C"; // <- Envia "C" para onPostExecute para informar que usuario nao cadastrado.
@@ -349,7 +353,7 @@ public class LoginActivity extends AppCompatActivity implements LoaderCallbacks<
                 return "ES"; // <- Envia "ES" (Erro Senha) para informa que a senha esta incorreta.
             } catch (ErroInexperadoException e) {
                 Toast.makeText(getApplicationContext(), "Desculpe. Houve uma erro, mas não sabemos o que aconteceu. Tente novamente", Toast.LENGTH_LONG).show();
-            }
+            }*/
 
             /*for (String credential : DUMMY_CREDENTIALS) {
                 String[] pieces = credential.split(":");

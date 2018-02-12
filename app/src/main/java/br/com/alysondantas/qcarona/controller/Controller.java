@@ -27,7 +27,8 @@ import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 
 public class Controller {
     private static Controller unicaInstancia;//variavel do controller de unica instancia
-    private String ip = "149.56.200.229";
+    //private String ip = "149.56.200.229";
+    private String ip = "192.168.22.105";
     private int porta = 1099;
     private Context context;
     private final static String ARQUIVO_PREFERENCIA = "Login";
@@ -147,5 +148,5 @@ public class Controller {
     public void setIpServidor(String ip, int porta){
         this.ip = ip;
     }
-}
 
+}
