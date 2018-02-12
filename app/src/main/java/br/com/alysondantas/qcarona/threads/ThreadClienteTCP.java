@@ -1,6 +1,7 @@
 package br.com.alysondantas.qcarona.threads;
 
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
@@ -10,6 +11,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.util.Observable;
 
+import br.com.alysondantas.qcarona.LoginActivity;
 import br.com.alysondantas.qcarona.util.Observado;
 
 /**
@@ -25,6 +27,8 @@ public class ThreadClienteTCP extends Observado implements Runnable{
     private String ip;
     private int porta;
 
+    private Object ultimaMensagem;
+
     public ThreadClienteTCP(String ip, int porta) {
         this.ip = ip;
         this.porta = porta;
@@ -35,13 +39,17 @@ public class ThreadClienteTCP extends Observado implements Runnable{
         configurar();
 
         while (true) {
-            try {
-                String obj = entradaMens.readUTF();
-                notificar(obj);
-            } catch (IOException e) {
-                e.printStackTrace();
-                Log.d("Cliente", "Nao foi ´possivel permanecer conectado ao servidor.");
-                break;
+            if (entradaMens != null) {
+                try {
+                    String obj = entradaMens.readUTF();
+                    this.ultimaMensagem = obj;
+                    Log.d("Thread", "Servidor enviou: " + obj);
+                    notificar(obj);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                    Log.d("Cliente", "Nao foi possível permanecer conectado ao servidor.");
+                    break;
+                }
             }
         }
     }
@@ -58,17 +66,25 @@ public class ThreadClienteTCP extends Observado implements Runnable{
     }
 
     public void enviarMensagem(final String mens){
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    saidaMens.writeUTF(mens);
-                } catch (IOException e) {
-                    e.printStackTrace();
+        if(saidaMens != null) {
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        saidaMens.writeUTF(mens);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
-            }
-        }).start();
+            }).start();
+        } else {
+            Log.d("Thread CX", "ERRO: Objeto de envio nulo.");
+        }
 
+    }
+
+    public String getUltimaMensagem(){
+        return (String) this.ultimaMensagem;
     }
 
     public void desconectar() throws IOException {
