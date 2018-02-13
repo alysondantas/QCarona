@@ -26,10 +26,6 @@
         <activity android:name=".CadastrarActivity" />
         <activity android:name=".EntrarActivity" />
         <activity
-            android:name=".LoginActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".ConfigServidor" />
-        <activity
             android:name=".AreaRestritaActivity"
             android:label="@string/title_activity_area_restrita" />
         <activity android:name=".CadastrarNovoActivity"></activity>

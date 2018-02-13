@@ -19,12 +19,15 @@ public class AreaRestritaActivity extends AppCompatActivity {
             switch (item.getItemId()) {
                 case R.id.navigation_home:
                     mTextMessage.setText(R.string.title_home);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new InicioFragment()).commit();
                     return true;
                 case R.id.navigation_dashboard:
                     mTextMessage.setText(R.string.title_dashboard);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new QueroCaronaFragment()).commit();
                     return true;
                 case R.id.navigation_notifications:
                     mTextMessage.setText(R.string.title_notifications);
+                    getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new MinhasCaronasFragment()).commit();
                     return true;
             }
             return false;
@@ -39,6 +42,11 @@ public class AreaRestritaActivity extends AppCompatActivity {
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+
+        if(savedInstanceState == null){
+            //adiciona fragmento inicial
+            getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new InicioFragment()).commit();
+        }
     }
 
 }

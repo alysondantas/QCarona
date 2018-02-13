@@ -1,17 +1,12 @@
 package br.com.alysondantas.qcarona.threads;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.Observable;
 
-import br.com.alysondantas.qcarona.LoginActivity;
 import br.com.alysondantas.qcarona.util.Observado;
 
 /**
