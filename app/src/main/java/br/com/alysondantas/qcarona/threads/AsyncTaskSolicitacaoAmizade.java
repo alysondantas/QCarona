@@ -2,30 +2,25 @@ package br.com.alysondantas.qcarona.threads;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
-import java.util.List;
 
-import br.com.alysondantas.qcarona.InicioFragment;
+import br.com.alysondantas.qcarona.controller.Controller;
+import br.com.alysondantas.qcarona.model.Protocolo;
 
 /**
- * Created by marco on 13/02/2018.
+ * Created by marco on 14/02/2018.
  */
 
-public class AsyncTaskBuscarAmigos extends AsyncTask<String, Object, String> {
+public class AsyncTaskSolicitacaoAmizade extends AsyncTask<String, Object, String> {
+    Context context;
 
-    private InicioFragment fragment;
-    private ArrayList<String> listTemp;
-
-    public AsyncTaskBuscarAmigos(InicioFragment frag) {
-        this.fragment = frag;
+    public AsyncTaskSolicitacaoAmizade(Context context) {
+        this.context = context;
     }
-
 
     @Override
     protected String doInBackground(String... strings) {
@@ -57,21 +52,17 @@ public class AsyncTaskBuscarAmigos extends AsyncTask<String, Object, String> {
 
     @Override
     protected void onPostExecute(String s) {
-        String[] info = s.split("\\|");
-        if(!info[1].equals("ERRO")){
-            String id = info[1].trim();
-            String nome = info[2].trim();
-            String sobrenome = info[3].trim();
-            ArrayList array = new ArrayList();
-            array.add(id + ": " + nome + " " + sobrenome);
-            this.listTemp = array;
-            publishProgress();
+        if (s != null && !s.equals("")) {
+            String info[] = s.split("\\|");
+            if (info[0].equals(Protocolo.Notificacao.SOLICITACAO_AMIZ_ENVIADA + "")) {
+                Toast.makeText(context, "A solicitação de amizade foi enviada", Toast.LENGTH_SHORT).show();
+            }
+            if (info[0].equals(Protocolo.Notificacao.JA_EXISTE_SOLICITACAO_AMIZ + "")) {
+                Toast.makeText(context, "Já existe uma solicitação de amizade. Tenha esperança, o usuario vai aceitar.", Toast.LENGTH_LONG).show();
+            }
+        } else {
+            Toast.makeText(context, "Desculpe, houve algum problema. Tente novamente mais tarde.", Toast.LENGTH_SHORT).show();
         }
     }
 
-    @Override
-    protected void onProgressUpdate(Object... values) {
-        fragment.setLista(listTemp);
-        //super.onProgressUpdate(values);
-    }
 }

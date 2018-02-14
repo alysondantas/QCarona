@@ -1,17 +1,21 @@
 package br.com.alysondantas.qcarona;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,6 +56,29 @@ public class InicioFragment extends Fragment {
         usuariosExib = new ArrayList<>();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, usuariosExib);
         lista.setAdapter(arrayAdapter);
+        lista.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // pega o o item selecionado com os dados da pessoa
+                final String user = (String) lista.getItemAtPosition(position);
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Solicitação de amizade")
+                        .setMessage("Você deseja mandar uma solicitação de amizade para " + user + "?")
+                        .setPositiveButton("sim",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        String[] info = user.split("\\:");
+                                        controller.enviarSolicitacaoAmizade(getContext(), Integer.parseInt(info[0].trim()));
+                                        Toast.makeText(getContext(),"Enviando solicitação de amizade", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                        .setNegativeButton("não", null)
+                        .show();
+
+            }
+
+        });
         botaoPesq = getView().findViewById(R.id.btn_buscar_amigo);
 
         botaoPesq.setOnClickListener(new View.OnClickListener() {

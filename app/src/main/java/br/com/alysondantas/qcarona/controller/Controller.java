@@ -1,6 +1,7 @@
 package br.com.alysondantas.qcarona.controller;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
@@ -22,6 +23,7 @@ import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
+import br.com.alysondantas.qcarona.threads.AsyncTaskSolicitacaoAmizade;
 import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 
 /**
@@ -162,4 +164,13 @@ public class Controller {
         this.ip = ip;
     }
 
+    public void enviarSolicitacaoAmizade(Context context, int idUsuario) {
+        String pack = Protocolo.Solicitacao.SOLICITAR_AMIZADE+"|"+getUsuario()+"|"+idUsuario;
+        AsyncTaskSolicitacaoAmizade solicitacao = new AsyncTaskSolicitacaoAmizade(context);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
 }
