@@ -16,6 +16,9 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import br.com.alysondantas.qcarona.AreaRestritaActivity;
+import br.com.alysondantas.qcarona.InicioFragment;
+import br.com.alysondantas.qcarona.model.Protocolo;
+import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
@@ -123,6 +126,16 @@ public class Controller {
         parametros[1] = porta+"";
         parametros[2] = pack;
         envia.execute(parametros);
+    }
+
+    public void buscarAmigos(InicioFragment frag, String email){
+        String pack = Protocolo.Solicitacao.BUSCAR_USUARIO_EMAIL+"|"+email;
+        AsyncTaskBuscarAmigos busca = new AsyncTaskBuscarAmigos(frag);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        busca.execute(parametros);
     }
 
     public Context getAtualContext(){
