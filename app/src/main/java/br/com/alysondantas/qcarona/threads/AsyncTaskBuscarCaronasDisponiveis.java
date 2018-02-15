@@ -6,11 +6,18 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
+import br.com.alysondantas.qcarona.QueroCaronaFragment;
+
 /**
  * Created by marco on 15/02/2018.
  */
 
 public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object, String> {
+    QueroCaronaFragment frag;
+
+    public AsyncTaskBuscarCaronasDisponiveis(QueroCaronaFragment frag) {
+        this.frag = frag;
+    }
 
     @Override
     protected String doInBackground(String... strings) {

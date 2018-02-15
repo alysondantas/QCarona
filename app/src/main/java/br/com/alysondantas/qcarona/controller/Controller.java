@@ -22,6 +22,7 @@ import br.com.alysondantas.qcarona.InicioFragment;
 import br.com.alysondantas.qcarona.QueroCaronaFragment;
 import br.com.alysondantas.qcarona.model.Protocolo;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
+import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarCaronasDisponiveis;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
 import br.com.alysondantas.qcarona.threads.AsyncTaskEditarPerfil;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
@@ -202,8 +203,8 @@ public class Controller {
     }
 
     public void atualizarListaCaronas(QueroCaronaFragment frag) {
-        String pack = Protocolo.Solicitacao.CARONAS_DISPONIVEIS+"|";
-        AsyncTaskSolicitacaoAmizade solicitacao = new AsyncTaskSolicitacaoAmizade(context);
+        String pack = Protocolo.Solicitacao.CARONAS_DISPONIVEIS+"|"+getId();
+        AsyncTaskBuscarCaronasDisponiveis solicitacao = new AsyncTaskBuscarCaronasDisponiveis(frag);
         String[] parametros = new String[3];
         parametros[0] = ip;
         parametros[1] = porta+"";
