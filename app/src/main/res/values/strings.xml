@@ -53,6 +53,7 @@
     <string name="title_home">Inicio</string>
     <string name="title_dashboard">Quero Carona</string>
     <string name="title_notifications">Minhas Caronas</string>
+    <string name="title_minhaconta">Minha Conta</string>
     <string name="email_pesq">Email amigo</string>
     <string name="btn_email_pesq">Buscar amigo</string>
 </resources>
