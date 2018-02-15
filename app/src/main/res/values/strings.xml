@@ -14,6 +14,12 @@
     <string name="cep">CEP</string>
     <string name="tel">Telefone</string>
 
+    <!-- Strings Minha Conta -->
+    <string name="olaseuid">Olá seu id é: </string>
+    <string name="dialogominhaconta">Gostaria de editar suas informações?</string>
+    <string name="sim">Sim!</string>
+    <string name="nao">Não</string>
+
     <!-- Strings Cadastrar Novo -->
     <string name="bemvindocad">Bem vindo! Qual o seu Nome?</string>
     <string name="qualsobrenome">E qual é o seu Sobrenome?</string>
@@ -52,6 +58,7 @@
     <string name="title_activity_area_restrita">AreaRestritaActivity</string>
     <string name="title_home">Inicio</string>
     <string name="title_dashboard">Quero Carona</string>
+    <string name="title_darcarona">Dar Carona</string>
     <string name="title_notifications">Minhas Caronas</string>
     <string name="title_minhaconta">Minha Conta</string>
     <string name="email_pesq">Email amigo</string>

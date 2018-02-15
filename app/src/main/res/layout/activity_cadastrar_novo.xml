@@ -38,7 +38,7 @@
 
     <EditText
         android:id="@+id/editTextCadNovo"
-        android:layout_width="356dp"
+        android:layout_width="268dp"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
@@ -52,7 +52,7 @@
     <ProgressBar
         android:id="@+id/progressBarCadNovo"
         style="?android:attr/progressBarStyleHorizontal"
-        android:layout_width="343dp"
+        android:layout_width="268dp"
         android:layout_height="34dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"

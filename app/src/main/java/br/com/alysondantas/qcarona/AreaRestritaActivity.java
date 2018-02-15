@@ -32,6 +32,9 @@ public class AreaRestritaActivity extends AppCompatActivity {
                 case R.id.navigation_minhaconta:
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MinhaContaFragment()).commit();
                     return true;
+                case R.id.navigation_darcarona:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new DarCaronaFragment()).commit();
+                    return true;
             }
             return false;
         }
