@@ -1,61 +1,49 @@
 package br.com.alysondantas.qcarona.threads;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.regex.Pattern;
 
-import br.com.alysondantas.qcarona.AreaRestritaActivity;
 import br.com.alysondantas.qcarona.EntrarActivity;
-import br.com.alysondantas.qcarona.MainActivity;
+import br.com.alysondantas.qcarona.R;
 import br.com.alysondantas.qcarona.controller.Controller;
 
 /**
- * Created by alyso on 11/02/2018.
+ * Created by alyso on 15/02/2018.
  */
 
-public class AsyncTaskRealizaLogin extends AsyncTask<String, Object, String> {
+public class AsyncTaskEditarPerfil extends AsyncTask<String, Object, String> {
     private ProgressBar progressBar;
-    private TextView texto;
     private int total = 0;
+    private Button button;
     private static int PROGRESSO = 25;
-    private EditText editTextSenha;
-    private EditText editTextUser;
     private Context context;
     private Controller controller;
-    private Button button;
+    private TextView textView;
 
-    public AsyncTaskRealizaLogin(Context context, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser, Button button) {
+    public AsyncTaskEditarPerfil(Context context, ProgressBar progressBar, Button button, TextView textView) {
         this.progressBar = progressBar;
-        this.texto = texto;
-        this.editTextSenha = editTextSenha;
-        this.editTextUser = editTextUser;
         this.context = context;
         controller = Controller.getInstance();
         this.button = button;
+        this.textView = textView;
     }
 
     @Override
     protected void onPreExecute(){
-        texto.setText("0%");
         Log.i("AsyncTask", "Exibindo ProgressDialog na tela Thread: " + Thread.currentThread().getName());
-
     }
 
     @Override
@@ -95,7 +83,6 @@ public class AsyncTaskRealizaLogin extends AsyncTask<String, Object, String> {
     protected void onProgressUpdate(Object... values) {
         total += PROGRESSO;
         progressBar.incrementProgressBy(PROGRESSO);
-        texto.setText(total + "%");
 
         super.onProgressUpdate(values);
     }
@@ -103,46 +90,35 @@ public class AsyncTaskRealizaLogin extends AsyncTask<String, Object, String> {
     @Override
     protected void onPostExecute(String result){
         if(result!=null) {
-            Log.i("AsyncRealizandoLogin", "Exibindo resultado Thread: " + result + " || " + Thread.currentThread().getName());
-            if(result.equals("100")){
-                progressBar.setProgress(0);
-                editTextUser.setEnabled(true);
-                editTextSenha.setEnabled(true);
-                button.setEnabled(true);
-                Toast toast = Toast.makeText(context, "Usuário ou senha invalido.",Toast.LENGTH_SHORT);
-                toast.show();
-            }else{
-                String informacoes[] = result.split(Pattern.quote("|"));
-                if(informacoes[0].equals("102")){
-                    Toast toast = Toast.makeText(context, "Login realizado com sucesso.",Toast.LENGTH_SHORT);
-                    toast.show();
-                    SharedPreferences.Editor editor = controller.getSharedPreferences().edit();
-                    editor.putString("user",controller.getUsuario());
-                    editor.putString("senha",controller.getSenha());
-                    editor.commit();
-                    String idS = informacoes[2];
-                    int id = Integer.parseInt(idS);
-                    controller.setId(id);
-                    Handler handler = new Handler(Looper.getMainLooper());
-                    handler.post(new Runnable() {
-                        public void run() {
-                            Intent intent = new Intent(context, AreaRestritaActivity.class);
-                            context.startActivity(intent);
-                        }
-                    });
+            Log.i("AsyncRealizandoCadastro", "Exibindo resultado Thread: " + result + " || " + Thread.currentThread().getName());
 
-                }else{
-                    Toast toast = Toast.makeText(context, "Erro para realizar login.",Toast.LENGTH_SHORT);
-                    toast.show();
-                }
+            if(result.equals("103")){
+                Toast toast = Toast.makeText(context, "Editado com sucesso.",Toast.LENGTH_SHORT);
+                toast.show();
+
+                progressBar.setVisibility(View.INVISIBLE);
+                progressBar.setProgress(0);
+                button.setEnabled(true);
+                button.setText(R.string.sim);
+
+            }else if(result.equals("100")){
+                Toast toast = Toast.makeText(context, "Erro para realizar cadastro, usuário já cadastrado.",Toast.LENGTH_SHORT);
+                toast.show();
+                progressBar.setProgress(0);
+                button.setText(R.string.cadastrar);
+                button.setEnabled(true);
+                textView.setText(R.string.opserrocad);
+            }else{
+                progressBar.setProgress(0);
+                button.setEnabled(true);
+                Toast toast = Toast.makeText(context, "Erro no servidor.",Toast.LENGTH_SHORT);
+                toast.show();
             }
+
         }else{
             Log.i("AsyncRealizandoLogin", "Erro ao baixar a informação " + Thread.currentThread().getName());
         }
         Log.i("AsyncRealizandoLogin", "Tirando ProgressDialog da tela Thread: " + Thread.currentThread().getName());
 
     }
-
-
-
 }

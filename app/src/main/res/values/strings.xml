@@ -19,6 +19,15 @@
     <string name="dialogominhaconta">Gostaria de editar suas informações?</string>
     <string name="sim">Sim!</string>
     <string name="nao">Não</string>
+    <string name="suaqualificacao">Sua qualificação é: 2.5</string>
+    <string name="editarnome">Você gostaria de editar seu nome?</string>
+    <string name="editarsobrenome">Você gostaria de editar seu sobrenome?</string>
+    <string name="editardata">Você gostaria de editar sua data de nascimento?</string>
+    <string name="editaremail">Você gostaria de editar seu email?</string>
+    <string name="editarsenha1">Diga sua nova senha:(Caso não queria editar repita a atual)</string>
+    <string name="editarsenha2">Repita a senha:</string>
+    <string name="editartel">Você gostaria de editar seu telefone?</string>
+    <string name="cancelar">Cancelar!</string>
 
     <!-- Strings Cadastrar Novo -->
     <string name="bemvindocad">Bem vindo! Qual o seu Nome?</string>

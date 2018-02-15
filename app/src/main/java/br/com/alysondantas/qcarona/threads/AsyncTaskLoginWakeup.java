@@ -83,6 +83,9 @@ public class AsyncTaskLoginWakeup extends AsyncTask<String, Void, String> {
                 if(informacoes[0].equals("102")){
                     Toast toast = Toast.makeText(context, "Login realizado com sucesso.",Toast.LENGTH_SHORT);
                     toast.show();
+                    String idS = informacoes[2];
+                    int id = Integer.parseInt(idS);
+                    controller.setId(id);
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         public void run() {
