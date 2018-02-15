@@ -40,6 +40,7 @@ public class Controller {
     private SharedPreferences sharedPreferences;
     private String user;
     private String senha;
+    private int id = 0;
 
     /**
      * Contrutor privado por ser singleton
@@ -128,6 +129,23 @@ public class Controller {
         parametros[1] = porta+"";
         parametros[2] = pack;
         envia.execute(parametros);
+    }
+
+    public void editar(Context context, String nome, String sobrenome, String email, String senha, String data, String tel, ProgressBar progressBar, Button button, TextView textView) throws NoSuchAlgorithmException {
+        MessageDigest m = MessageDigest.getInstance("MD5");
+        m.update(senha.getBytes(), 0, senha.length());
+        String md5 = new BigInteger(1, m.digest()).toString(16);
+
+        String pack = "4|" + nome + "|" + sobrenome + "|" + email + "|" + md5 + "|" + data + "|" + tel + "|" + id;
+
+        AsyncTaskCadastra envia = new AsyncTaskCadastra(context, progressBar, button, textView);
+        Log.i("AsyncEditar", "AsyncTaskEditar senado chamado Thread: " + Thread.currentThread().getName());
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        envia.execute(parametros);
+
     }
 
     public void buscarAmigos(InicioFragment frag, String email){
