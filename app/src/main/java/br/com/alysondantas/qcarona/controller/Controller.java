@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
@@ -18,6 +19,7 @@ import java.security.NoSuchAlgorithmException;
 
 import br.com.alysondantas.qcarona.AreaRestritaActivity;
 import br.com.alysondantas.qcarona.InicioFragment;
+import br.com.alysondantas.qcarona.QueroCaronaFragment;
 import br.com.alysondantas.qcarona.model.Protocolo;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
@@ -33,7 +35,7 @@ import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 public class Controller {
     private static Controller unicaInstancia;//variavel do controller de unica instancia
     //private String ip = "149.56.200.229";
-    private String ip = "192.168.0.108";
+    private String ip = "192.168.0.102";
     private int porta = 1099;
     private Context context;
     private final static String ARQUIVO_PREFERENCIA = "Login";
@@ -166,6 +168,16 @@ public class Controller {
 
     public void enviarSolicitacaoAmizade(Context context, int idUsuario) {
         String pack = Protocolo.Solicitacao.SOLICITAR_AMIZADE+"|"+getUsuario()+"|"+idUsuario;
+        AsyncTaskSolicitacaoAmizade solicitacao = new AsyncTaskSolicitacaoAmizade(context);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
+    public void atualizarListaCaronas(QueroCaronaFragment frag) {
+        String pack = Protocolo.Solicitacao.CARONAS_DISPONIVEIS+"|";
         AsyncTaskSolicitacaoAmizade solicitacao = new AsyncTaskSolicitacaoAmizade(context);
         String[] parametros = new String[3];
         parametros[0] = ip;
