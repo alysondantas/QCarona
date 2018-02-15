@@ -80,6 +80,9 @@ public class MinhaContaFragment extends Fragment {
         textViewDialogoMnhaconta = getView().findViewById(R.id.textViewDialogoMnhaconta);
         progressBar = getView().findViewById(R.id.progressBarEditar);
         controller = Controller.getInstance();
+        controller.obtemPerfil(getView().getContext(),controller.getId());
+        setPerfil();
+        colocaEstrelas();
 
         buttonSimMinhaconta.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -96,6 +99,22 @@ public class MinhaContaFragment extends Fragment {
         });
 
         textViewIdMinhaconta.setText("Olá seu id é: " + controller.getId());
+    }
+
+    public void colocaEstrelas(){
+        String valorS = controller.getUserAux().getQualificacao() + "f";
+        valorS = valorS.trim();
+        float valor = Float.parseFloat(valorS);
+        ratingBar.setRating(valor);
+    }
+
+    public void setPerfil(){
+        textViewNomeMinhaConta.setText(controller.getUserAux().getNome());
+        textViewSobreNomeMinhaconta.setText(controller.getUserAux().getSobreNome());
+        textViewIdadeMinhaConta.setText(controller.getUserAux().getData());
+        textViewEmailMinhaConta.setText(controller.getUserAux().getEmail());
+        textViewNumeroMinhaConta.setText(controller.getUserAux().getNumero());
+        textViewQualificacaoMinhaconta.setText(controller.getUserAux().getQualificacao());
     }
 
     public void clickNext(){

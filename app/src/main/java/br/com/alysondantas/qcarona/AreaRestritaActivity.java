@@ -7,9 +7,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import br.com.alysondantas.qcarona.controller.Controller;
+
 public class AreaRestritaActivity extends AppCompatActivity {
 
     private TextView mTextMessage;
+    private Controller controller;
 
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
@@ -44,6 +47,8 @@ public class AreaRestritaActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_area_restrita);
+        controller = Controller.getInstance();
+        controller.obtemPerfil(this,controller.getId());
 
         //mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
