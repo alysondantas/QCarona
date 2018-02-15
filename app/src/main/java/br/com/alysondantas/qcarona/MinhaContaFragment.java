@@ -94,10 +94,12 @@ public class MinhaContaFragment extends Fragment {
                 clickPreview();
             }
         });
+
+        textViewIdMinhaconta.setText("Olá seu id é: " + controller.getId());
     }
 
     public void clickNext(){
-        if(!selecionado){
+        if(selecionado){
             switch (cont){
                 case 0:
                     if(!editTextMinhaConta.getText().toString().equals("")){
@@ -202,6 +204,7 @@ public class MinhaContaFragment extends Fragment {
             selecionado = true;
             buttonNaoMinhaconta.setText(R.string.cancelar);
             buttonSimMinhaconta.setText(R.string.proximo);
+            editTextMinhaConta.setVisibility(View.VISIBLE);
             buttonNaoMinhaconta.setVisibility(View.VISIBLE);
             textViewDialogoMnhaconta.setText(R.string.editarnome);
         }
@@ -211,11 +214,17 @@ public class MinhaContaFragment extends Fragment {
         switch (cont){
             case 0:
                 buttonNaoMinhaconta.setVisibility(View.INVISIBLE);
+                buttonSimMinhaconta.setText(R.string.sim);
+                selecionado = false;
+                editTextMinhaConta.setVisibility(View.INVISIBLE);
+                textViewDialogoMnhaconta.setText(R.string.dialogominhaconta);
+                editTextMinhaConta.setText(nome);
                 break;
             case 1:
                 buttonNaoMinhaconta.setVisibility(View.INVISIBLE);
                 editTextMinhaConta.setVisibility(View.INVISIBLE);
                 cont--;
+                selecionado = false;
                 textViewDialogoMnhaconta.setText(R.string.dialogominhaconta);
                 editTextMinhaConta.setText(nome);
                 editTextMinhaConta.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
@@ -223,31 +232,31 @@ public class MinhaContaFragment extends Fragment {
             case 2:
                 cont--;
                 editTextMinhaConta.setText(sobrenome);
-                textViewIdMinhaconta.setText(R.string.editarsobrenome);
+                textViewDialogoMnhaconta.setText(R.string.editarsobrenome);
                 editTextMinhaConta.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_NORMAL);
                 break;
             case 3:
                 cont--;
                 editTextMinhaConta.setText(email);
-                textViewIdMinhaconta.setText(R.string.editaremail);
+                textViewDialogoMnhaconta.setText(R.string.editaremail);
                 editTextMinhaConta.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_WEB_EMAIL_ADDRESS);
                 break;
             case 4:
                 cont--;
                 editTextMinhaConta.setText(senha);
-                textViewIdMinhaconta.setText(R.string.editarsenha1);
+                textViewDialogoMnhaconta.setText(R.string.editarsenha1);
                 editTextMinhaConta.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 break;
             case 5:
                 cont--;
                 editTextMinhaConta.setText(senha2);
-                textViewIdMinhaconta.setText(R.string.editarsenha2);
+                textViewDialogoMnhaconta.setText(R.string.editarsenha2);
                 editTextMinhaConta.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
                 break;
             case 6:
                 cont--;
                 editTextMinhaConta.setText(tel);
-                textViewIdMinhaconta.setText(R.string.editartel);
+                textViewDialogoMnhaconta.setText(R.string.editartel);
                 editTextMinhaConta.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_VARIATION_NORMAL);
                 break;
         }

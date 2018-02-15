@@ -120,6 +120,9 @@ public class AsyncTaskRealizaLogin extends AsyncTask<String, Object, String> {
                     editor.putString("user",controller.getUsuario());
                     editor.putString("senha",controller.getSenha());
                     editor.commit();
+                    String idS = informacoes[2];
+                    int id = Integer.parseInt(idS);
+                    controller.setId(id);
                     Handler handler = new Handler(Looper.getMainLooper());
                     handler.post(new Runnable() {
                         public void run() {

@@ -21,6 +21,7 @@ import br.com.alysondantas.qcarona.InicioFragment;
 import br.com.alysondantas.qcarona.model.Protocolo;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
+import br.com.alysondantas.qcarona.threads.AsyncTaskEditarPerfil;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
 import br.com.alysondantas.qcarona.threads.AsyncTaskSolicitacaoAmizade;
@@ -67,6 +68,12 @@ public class Controller {
         unicaInstancia = null;
     }
 
+    public void setId(int id){
+        this.id = id;
+    }
+    public int getId(){
+        return id;
+    }
 
     public void realizarLogin(String email, String senha, Context contexto, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser, Button button) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
         Toast toast = Toast.makeText(contexto, "Realizando Login, aguarde.",Toast.LENGTH_SHORT);
@@ -136,9 +143,9 @@ public class Controller {
         m.update(senha.getBytes(), 0, senha.length());
         String md5 = new BigInteger(1, m.digest()).toString(16);
 
-        String pack = "4|" + nome + "|" + sobrenome + "|" + email + "|" + md5 + "|" + data + "|" + tel + "|" + id;
+        String pack = "5|" + nome + "|" + sobrenome + "|" + email + "|" + md5 + "|" + data + "|" + tel + "|" + id;
 
-        AsyncTaskCadastra envia = new AsyncTaskCadastra(context, progressBar, button, textView);
+        AsyncTaskEditarPerfil envia = new AsyncTaskEditarPerfil(context, progressBar, button, textView);
         Log.i("AsyncEditar", "AsyncTaskEditar senado chamado Thread: " + Thread.currentThread().getName());
         String[] parametros = new String[3];
         parametros[0] = ip;
