@@ -21,11 +21,13 @@ import br.com.alysondantas.qcarona.AreaRestritaActivity;
 import br.com.alysondantas.qcarona.InicioFragment;
 import br.com.alysondantas.qcarona.QueroCaronaFragment;
 import br.com.alysondantas.qcarona.model.Protocolo;
+import br.com.alysondantas.qcarona.model.Usuario;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarCaronasDisponiveis;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
 import br.com.alysondantas.qcarona.threads.AsyncTaskEditarPerfil;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
+import br.com.alysondantas.qcarona.threads.AsyncTaskObtemPerfil;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
 import br.com.alysondantas.qcarona.threads.AsyncTaskSolicitacaoAmizade;
 import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
@@ -45,11 +47,13 @@ public class Controller {
     private String user;
     private String senha;
     private int id = 0;
+    private Usuario userAux;
 
     /**
      * Contrutor privado por ser singleton
      */
     private Controller(){
+        userAux = new Usuario();
     }
 
     /**
@@ -76,6 +80,13 @@ public class Controller {
     }
     public int getId(){
         return id;
+    }
+
+    public Usuario getUserAux() {
+        return userAux;
+    }
+    public void setUserAux(Usuario userAux){
+        this.userAux = userAux;
     }
 
     public void realizarLogin(String email, String senha, Context contexto, ProgressBar progressBar, TextView texto , EditText editTextSenha, EditText editTextUser, Button button) throws IOException, ClassNotFoundException, NoSuchAlgorithmException {
@@ -156,6 +167,17 @@ public class Controller {
         parametros[2] = pack;
         envia.execute(parametros);
 
+    }
+
+    public void obtemPerfil(Context context, int id){
+        String pack = "6|" + id;
+        AsyncTaskObtemPerfil envia = new AsyncTaskObtemPerfil(context);
+        Log.i("AsyncTaskObtemPerfil", "AsyncTaskObtemPerfil senado chamado Thread: " + Thread.currentThread().getName());
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        envia.execute(parametros);
     }
 
     public void buscarAmigos(InicioFragment frag, String email){
