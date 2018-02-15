@@ -29,6 +29,9 @@ public class AreaRestritaActivity extends AppCompatActivity {
                     //mTextMessage.setText(R.string.title_notifications);
                     getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MinhasCaronasFragment()).commit();
                     return true;
+                case R.id.navigation_minhaconta:
+                    getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new MinhaContaFragment()).commit();
+                    return true;
             }
             return false;
         }
