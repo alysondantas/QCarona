@@ -109,12 +109,18 @@ public class MinhaContaFragment extends Fragment {
     }
 
     public void setPerfil(){
-        textViewNomeMinhaConta.setText(controller.getUserAux().getNome());
-        textViewSobreNomeMinhaconta.setText(controller.getUserAux().getSobreNome());
-        textViewIdadeMinhaConta.setText(controller.getUserAux().getData());
-        textViewEmailMinhaConta.setText(controller.getUserAux().getEmail());
-        textViewNumeroMinhaConta.setText(controller.getUserAux().getNumero());
+        nome = controller.getUserAux().getNome();
+        textViewNomeMinhaConta.setText(nome);
+        sobrenome = controller.getUserAux().getSobreNome();
+        textViewSobreNomeMinhaconta.setText(sobrenome);
+        data = controller.getUserAux().getData();
+        textViewIdadeMinhaConta.setText(data);
+        email = controller.getUserAux().getEmail();
+        textViewEmailMinhaConta.setText(email);
+        tel = controller.getUserAux().getNumero();
+        textViewNumeroMinhaConta.setText(tel);
         textViewQualificacaoMinhaconta.setText(controller.getUserAux().getQualificacao());
+        editTextMinhaConta.setText(nome);
     }
 
     public void clickNext(){
@@ -190,7 +196,7 @@ public class MinhaContaFragment extends Fragment {
                         tel = editTextMinhaConta.getText().toString();
                         editTextMinhaConta.setText(data);
                         buttonSimMinhaconta.setText(R.string.cadastrar);
-                        editTextMinhaConta.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL);
+                        editTextMinhaConta.setInputType(InputType.TYPE_CLASS_DATETIME | InputType.TYPE_DATETIME_VARIATION_NORMAL);
                         textViewDialogoMnhaconta.setText(R.string.editardata);
                     }else {
                         Toast toast = Toast.makeText(getView().getContext(), "Inserir um numero de telefone valido.", Toast.LENGTH_SHORT);
