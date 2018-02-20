@@ -20,7 +20,7 @@ public class AsyncTaskObtemAmigos  extends AsyncTask<String, Object, String> {
     private ArrayList<String> listTemp;
 
     public AsyncTaskObtemAmigos(MinhasCaronasFragment frag){
-
+        this.fragment = frag;
     }
 
     @Override
@@ -55,11 +55,15 @@ public class AsyncTaskObtemAmigos  extends AsyncTask<String, Object, String> {
     protected void onPostExecute(String s) {
         String[] info = s.split("\\|");
         if(!info[1].equals("ERRO")){
-            String id = info[1].trim();
-            String nome = info[2].trim();
-            String sobrenome = info[3].trim();
             ArrayList array = new ArrayList();
-            array.add(id + ": " + nome + " " + sobrenome);
+            String[] amigos = info[1].split("&");
+            for (int i = 0; i< amigos.length ; i++){
+                String[] ind = amigos[i].split("/");
+                String id = ind[0].trim();
+                String nome = ind[1].trim();
+                String email = ind[2].trim();
+                array.add(id + ": " + nome + " " + email);
+            }
             this.listTemp = array;
             publishProgress();
         }
@@ -67,7 +71,9 @@ public class AsyncTaskObtemAmigos  extends AsyncTask<String, Object, String> {
 
     @Override
     protected void onProgressUpdate(Object... values) {
-        fragment.setListaAmigos(listTemp);
+        if (listTemp !=null) {
+            fragment.setListaAmigos(listTemp);
+        }
         //super.onProgressUpdate(values);
     }
 }
