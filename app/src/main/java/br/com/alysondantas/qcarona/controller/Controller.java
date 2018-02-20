@@ -26,10 +26,12 @@ import br.com.alysondantas.qcarona.model.Usuario;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarCaronasDisponiveis;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
+import br.com.alysondantas.qcarona.threads.AsyncTaskDesFazAmigo;
 import br.com.alysondantas.qcarona.threads.AsyncTaskEditarPerfil;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
 import br.com.alysondantas.qcarona.threads.AsyncTaskObtemAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskObtemPerfil;
+import br.com.alysondantas.qcarona.threads.AsyncTaskObtemPerfilAmigo;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
 import br.com.alysondantas.qcarona.threads.AsyncTaskSolicitacaoAmizade;
 import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
@@ -49,6 +51,7 @@ public class Controller {
     private String user;
     private String senha;
     private int id = 0;
+    private int idamigo = 0;
     private Usuario userAux;
 
     /**
@@ -182,6 +185,17 @@ public class Controller {
         envia.execute(parametros);
     }
 
+    public void obtemPerfilAmigo(Context context, int id, MinhasCaronasFragment fragment){
+        String pack = "6|" + id;
+        AsyncTaskObtemPerfilAmigo envia = new AsyncTaskObtemPerfilAmigo(context, fragment);
+        Log.i("AsyncTaskObtemPerfAmigo", "AsyncTaskObtemPerfilAmigo senado chamado Thread: " + Thread.currentThread().getName());
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        envia.execute(parametros);
+    }
+
     public void obtemAmigos(MinhasCaronasFragment frag){
         String pack = Protocolo.Solicitacao.BUSCAR_AMIGOS+"|"+id;
         AsyncTaskObtemAmigos busca = new AsyncTaskObtemAmigos(frag);
@@ -236,6 +250,16 @@ public class Controller {
         solicitacao.execute(parametros);
     }
 
+    public void desfazAmizade(Context context, int idAmigo){
+        String pack = Protocolo.Solicitacao.DESFAZ_AMIGO+"|"+id+"|"+idAmigo;
+        AsyncTaskDesFazAmigo solicitacao = new AsyncTaskDesFazAmigo(context);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
     public void atualizarListaCaronas(QueroCaronaFragment frag) {
         String pack = Protocolo.Solicitacao.CARONAS_DISPONIVEIS+"|"+getId();
         AsyncTaskBuscarCaronasDisponiveis solicitacao = new AsyncTaskBuscarCaronasDisponiveis(frag);
@@ -244,5 +268,12 @@ public class Controller {
         parametros[1] = porta+"";
         parametros[2] = pack;
         solicitacao.execute(parametros);
+    }
+
+    public void setAmizade(int idAmigo){
+        this.idamigo = idAmigo;
+    }
+    public int getIdamigo(){
+        return idamigo;
     }
 }

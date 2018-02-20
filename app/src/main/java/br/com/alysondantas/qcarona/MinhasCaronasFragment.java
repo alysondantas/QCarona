@@ -1,6 +1,9 @@
 package br.com.alysondantas.qcarona;
 
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,11 +52,15 @@ public class MinhasCaronasFragment extends Fragment {
 
         controller.obtemAmigos(this);
 
+
         listaAmigos.setAdapter(arrayAdapter);
         listaAmigos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
+                final String user = (String) listaAmigos.getItemAtPosition(position);
+                String[] info = user.split("\\:");
+                controller.setAmizade(Integer.parseInt(info[0].trim()));
+                slecionaAmigo();
             }
         });
 
@@ -61,6 +69,15 @@ public class MinhasCaronasFragment extends Fragment {
     public void setListaAmigos(ArrayList list){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         listaAmigos.setAdapter(arrayAdapter);
+    }
+
+    public void slecionaAmigo(){
+        controller.obtemPerfilAmigo(getContext(),controller.getIdamigo(), MinhasCaronasFragment.this);
+
+    }
+    public void mudaParaAmigo(){
+        Intent intent = new Intent(getContext(), AmigoActivity.class);
+        startActivity(intent);
     }
 
 }

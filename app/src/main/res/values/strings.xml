@@ -59,6 +59,11 @@
     </string>
     <string name="config_servidor">Servidor</string>
 
+    <!-- Strings tela de amigo -->
+    <string name="idamigo">A id do seu amigo é:</string>
+    <string name="qualificacaoamigo">A qualificação do seu amigo é:</string>
+    <string name="dadosamigo">Os dados do amigo:</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="title_activity_principal">PrincipalActivity</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>

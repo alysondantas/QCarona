@@ -1,5 +1,8 @@
 package br.com.alysondantas.qcarona;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -58,6 +61,11 @@ public class AreaRestritaActivity extends AppCompatActivity {
             //adiciona fragmento inicial
             getSupportFragmentManager().beginTransaction().add(R.id.frame_container, new InicioFragment()).commit();
         }
+    }
+
+    public void openFragment()
+    {
+        getSupportFragmentManager().beginTransaction().replace(R.id.frame_container, new DarCaronaFragment()).commit();
     }
 
 }

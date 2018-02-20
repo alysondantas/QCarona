@@ -28,7 +28,8 @@
         <activity
             android:name=".AreaRestritaActivity"
             android:label="@string/title_activity_area_restrita" />
-        <activity android:name=".CadastrarNovoActivity"></activity>
-</application>
+        <activity android:name=".CadastrarNovoActivity" />
+        <activity android:name=".AmigoActivity"></activity>
+    </application>
 
 </manifest>
