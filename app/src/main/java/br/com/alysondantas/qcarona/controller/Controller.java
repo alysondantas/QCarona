@@ -290,7 +290,7 @@ public class Controller {
     }
 
     public void enviarAceitaAmizade(Context context, int idUsuario, int idSolicitacao) {
-        String pack = Protocolo.Solicitacao.ACEITA_SOLICITACAO+"|"+id+"|"+idUsuario + idSolicitacao;
+        String pack = Protocolo.Solicitacao.ACEITA_SOLICITACAO+"|"+id+"|"+idUsuario + "|" + idSolicitacao;
         AsyncTaskAceitaSolicitacaoAmizade solicitacao = new AsyncTaskAceitaSolicitacaoAmizade(context);
         String[] parametros = new String[3];
         parametros[0] = ip;

@@ -63,7 +63,7 @@ public class InicioFragment extends Fragment {
         listaSolicitacoes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 // pega o o item selecionado com os dados da pessoa
-                final String user = (String) lista.getItemAtPosition(position);
+                final String user = (String) listaSolicitacoes.getItemAtPosition(position);
                 new AlertDialog.Builder(getContext())
                         .setTitle("Solicitação de amizade")
                         .setMessage("Você deseja aceitar uma solicitação de amizade enviada por" + user + "?")
@@ -72,7 +72,7 @@ public class InicioFragment extends Fragment {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
                                         String[] info = user.split("\\:");
-                                        controller.enviarAceitaAmizade(getContext(), Integer.parseInt(info[0].trim()), Integer.parseInt(info[3].trim()));
+                                        controller.enviarAceitaAmizade(getContext(), Integer.parseInt(info[0].trim()), Integer.parseInt(info[2].trim()));
                                         Toast.makeText(getContext(),"Aceitando solicitação de amizade", Toast.LENGTH_SHORT).show();
                                     }
                                 })

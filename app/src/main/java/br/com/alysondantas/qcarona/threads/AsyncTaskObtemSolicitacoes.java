@@ -62,7 +62,7 @@ public class AsyncTaskObtemSolicitacoes extends AsyncTask<String, Object, String
                 String nome = ind[1].trim();
                 String email = ind[2].trim();
                 String idS = ind[3].trim();
-                array.add(id + ": " + nome + " " + email + " " + idS);
+                array.add(id + ": " + nome + " " + email + " :" + idS);
             }
             this.listTemp = array;
             publishProgress();
