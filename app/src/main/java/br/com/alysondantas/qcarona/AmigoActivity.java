@@ -50,6 +50,7 @@ public class AmigoActivity extends AppCompatActivity {
         textViewidAmigo = findViewById(R.id.textViewidAmigo);
         ratingBar = findViewById(R.id.ratingbarAmigo);
         button = findViewById(R.id.buttonDesfazAmigo);
+        ratingBar.setEnabled(false);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -74,6 +75,7 @@ public class AmigoActivity extends AppCompatActivity {
         textViewNumeroAmigo.setText(tel);
         textViewQualificacaoAmigo.setText(controller.getUserAux().getQualificacao());
         textViewidAmigo.setText("O id do amigo é: " + controller.getUserAux().getId());
+
     }
 
     public void colocaEstrelas(){
