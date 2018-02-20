@@ -73,8 +73,8 @@ public class AsyncTaskDesFazAmigo extends AsyncTask<String, Void, String> {
             Log.i("AsyncRealizandoLogin", "Exibindo resultado Thread: " + result + " || " + Thread.currentThread().getName());
 
                 String informacoes[] = result.split(Pattern.quote("|"));
-                if(informacoes[0].equals(Protocolo.Notificacao.OPERACAO_CONCLUIDA)){
-                    Toast toast = Toast.makeText(context, "Já era amizade..." + result,Toast.LENGTH_SHORT);
+                if(informacoes[0].equals(Protocolo.Notificacao.OPERACAO_CONCLUIDA + "")){
+                    Toast toast = Toast.makeText(context, "Já era amizade...",Toast.LENGTH_SHORT);
                     toast.show();
                 }else{
                     Toast toast = Toast.makeText(context, "Erro ao desfazer amizade.",Toast.LENGTH_SHORT);
