@@ -23,6 +23,7 @@ import br.com.alysondantas.qcarona.MinhasCaronasFragment;
 import br.com.alysondantas.qcarona.QueroCaronaFragment;
 import br.com.alysondantas.qcarona.model.Protocolo;
 import br.com.alysondantas.qcarona.model.Usuario;
+import br.com.alysondantas.qcarona.threads.AsyncTaskAceitaSolicitacaoAmizade;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarCaronasDisponiveis;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
@@ -32,6 +33,7 @@ import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
 import br.com.alysondantas.qcarona.threads.AsyncTaskObtemAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskObtemPerfil;
 import br.com.alysondantas.qcarona.threads.AsyncTaskObtemPerfilAmigo;
+import br.com.alysondantas.qcarona.threads.AsyncTaskObtemSolicitacoes;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
 import br.com.alysondantas.qcarona.threads.AsyncTaskSolicitacaoAmizade;
 import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
@@ -275,5 +277,25 @@ public class Controller {
     }
     public int getIdamigo(){
         return idamigo;
+    }
+
+    public void obtemSolicitacoes(InicioFragment frag){
+        String pack = Protocolo.Solicitacao.BUSCA_SOLICITACAO_AMIZADE+"|"+id;
+        AsyncTaskObtemSolicitacoes busca = new AsyncTaskObtemSolicitacoes(frag);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        busca.execute(parametros);
+    }
+
+    public void enviarAceitaAmizade(Context context, int idUsuario, int idSolicitacao) {
+        String pack = Protocolo.Solicitacao.ACEITA_SOLICITACAO+"|"+id+"|"+idUsuario + idSolicitacao;
+        AsyncTaskAceitaSolicitacaoAmizade solicitacao = new AsyncTaskAceitaSolicitacaoAmizade(context);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
     }
 }
