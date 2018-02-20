@@ -33,6 +33,8 @@ public class InicioFragment extends Fragment {
     private ListView lista;
     private List<String> usuariosExib;
     private EditText editTextEmail;
+    private ListView listaSolicitacoes;
+    private List<String> solicitacoesExib;
     private Button botaoPesq;
 
     public InicioFragment() {
@@ -50,9 +52,36 @@ public class InicioFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         lista = getView().findViewById(R.id.listView);
+        listaSolicitacoes = getView().findViewById(R.id.listViewSolicitacoesAmigos);
         editTextEmail = (EditText) getView().findViewById(R.id.editTextEmail);
-
         controller = Controller.getInstance();
+
+        solicitacoesExib = new ArrayList<>();
+        ArrayAdapter<String> arrayAdapterSolic = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, solicitacoesExib);
+        controller.obtemSolicitacoes(this);
+        listaSolicitacoes.setAdapter(arrayAdapterSolic);
+        listaSolicitacoes.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                // pega o o item selecionado com os dados da pessoa
+                final String user = (String) listaSolicitacoes.getItemAtPosition(position);
+                new AlertDialog.Builder(getContext())
+                        .setTitle("Solicitação de amizade")
+                        .setMessage("Você deseja aceitar uma solicitação de amizade enviada por" + user + "?")
+                        .setPositiveButton("sim",
+                                new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialogInterface, int i) {
+                                        String[] info = user.split("\\:");
+                                        controller.enviarAceitaAmizade(getContext(), Integer.parseInt(info[0].trim()), Integer.parseInt(info[2].trim()));
+                                        Toast.makeText(getContext(),"Aceitando solicitação de amizade", Toast.LENGTH_SHORT).show();
+                                    }
+                                })
+                        .setNegativeButton("não", null)
+                        .show();
+            }
+        });
+
+
         usuariosExib = new ArrayList<>();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, usuariosExib);
         lista.setAdapter(arrayAdapter);
@@ -96,5 +125,10 @@ public class InicioFragment extends Fragment {
     public void setLista(ArrayList list){
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
         lista.setAdapter(arrayAdapter);
+    }
+
+    public void setListaSolicitacoes(ArrayList list){
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        listaSolicitacoes.setAdapter(arrayAdapter);
     }
 }
