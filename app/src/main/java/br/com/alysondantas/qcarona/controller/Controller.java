@@ -23,6 +23,7 @@ import br.com.alysondantas.qcarona.MinhasCaronasFragment;
 import br.com.alysondantas.qcarona.QueroCaronaFragment;
 import br.com.alysondantas.qcarona.model.Protocolo;
 import br.com.alysondantas.qcarona.model.Usuario;
+import br.com.alysondantas.qcarona.threads.AsyncTaskBuscaCidadesDisponiveis;
 import br.com.alysondantas.qcarona.threads.AsyncTaskAceitaSolicitacaoAmizade;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarCaronasDisponiveis;
@@ -264,6 +265,26 @@ public class Controller {
 
     public void atualizarListaCaronas(QueroCaronaFragment frag) {
         String pack = Protocolo.Solicitacao.CARONAS_DISPONIVEIS+"|"+getId();
+        AsyncTaskBuscarCaronasDisponiveis solicitacao = new AsyncTaskBuscarCaronasDisponiveis(frag);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
+    public void atualizarCidadesDisponiveis(QueroCaronaFragment frag){
+        String pack = Protocolo.Solicitacao.CIDADES_DISPONIVEIS+"|";
+        AsyncTaskBuscaCidadesDisponiveis solicitacao = new AsyncTaskBuscaCidadesDisponiveis(frag);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
+    public void verificarCaronaDisponivel(QueroCaronaFragment frag, String cidadeOrigem, String cidadeDestino) {
+        String pack = Protocolo.Solicitacao.CARONAS_DISPONIVEIS+"|"+cidadeOrigem+"|"+cidadeDestino;
         AsyncTaskBuscarCaronasDisponiveis solicitacao = new AsyncTaskBuscarCaronasDisponiveis(frag);
         String[] parametros = new String[3];
         parametros[0] = ip;

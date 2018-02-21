@@ -5,17 +5,21 @@ import android.os.AsyncTask;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 
 import br.com.alysondantas.qcarona.QueroCaronaFragment;
+import br.com.alysondantas.qcarona.model.Protocolo;
 
 /**
- * Created by marco on 15/02/2018.
+ * Created by marco on 20/02/2018.
  */
 
-public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object, String> {
+public class AsyncTaskBuscaCidadesDisponiveis extends AsyncTask<String, Object, String> {
+
     QueroCaronaFragment frag;
 
-    public AsyncTaskBuscarCaronasDisponiveis(QueroCaronaFragment frag) {
+    public AsyncTaskBuscaCidadesDisponiveis(QueroCaronaFragment frag) {
         this.frag = frag;
     }
 
@@ -26,23 +30,20 @@ public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object,
             String ip = strings[0];
             String portaS = strings[1];
             int porta = Integer.parseInt(portaS);
-            publishProgress();
             String pack = strings[2];
             Socket rec = new Socket(ip,porta);
             ObjectOutputStream saida = new ObjectOutputStream(rec.getOutputStream());
             saida.writeObject(pack);
 
+
             ObjectInputStream entrada = new ObjectInputStream(rec.getInputStream());//recebo o pacote do cliente
             Object object = entrada.readObject();
-            publishProgress();
             if ((object != null) && (object instanceof String)) {
                 recebido = (String) object;
             }
             saida.close();//fecha a comunicação com o servidor
             entrada.close();
             rec.close();
-            publishProgress();
-
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -51,7 +52,16 @@ public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object,
 
     @Override
     protected void onPostExecute(String s) {
-        String[] reuslt = s.split("\\|");
-        String[] caronas = reuslt[1].split(";");
+        String[] resultado = s.split("\\|");
+        if (resultado[0].equals(Protocolo.Notificacao.RETORNO_CIDADES_DISPONIVEIS)) {
+            String[] cidades = resultado[1].split(";");
+            List<String> cidadesList = new ArrayList<>();
+            for (String cidade : cidades) {
+                cidadesList.add(cidade);
+            }
+            frag.adicionarCidadesOrigem(cidadesList);
+            frag.adicionarCidadesDestino(cidadesList);
+        }
+        //super.onPostExecute(s);
     }
 }

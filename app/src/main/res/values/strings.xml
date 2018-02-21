@@ -83,4 +83,5 @@
     <string name="btn_email_pesq">Buscar amigo</string>
     <string name="text_origem">Cidade Origem</string>
     <string name="cidade_destino_quero_carona">Cidade Destino</string>
+    <string name="btn_text">Verificar</string>
 </resources>
