@@ -27,6 +27,7 @@ import br.com.alysondantas.qcarona.controller.Controller;
 public class MinhasCaronasFragment extends Fragment {
 
     private ListView listaAmigos;
+    private ListView listViewCaronas;
     private List<String> amigosExib;
     private Controller controller;
 
@@ -46,11 +47,13 @@ public class MinhasCaronasFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         listaAmigos = getView().findViewById(R.id.listViewAmigos);
+        listViewCaronas = getView().findViewById(R.id.listViewCaronas);
         controller = Controller.getInstance();
         amigosExib = new ArrayList<>();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, amigosExib);
 
         controller.obtemAmigos(this);
+        controller.caronasAndamento(this);
 
 
         listaAmigos.setAdapter(arrayAdapter);
@@ -79,5 +82,11 @@ public class MinhasCaronasFragment extends Fragment {
         Intent intent = new Intent(getContext(), AmigoActivity.class);
         startActivity(intent);
     }
+
+    public void setListaCaronas(ArrayList list){
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, list);
+        listViewCaronas.setAdapter(arrayAdapter);
+    }
+
 
 }

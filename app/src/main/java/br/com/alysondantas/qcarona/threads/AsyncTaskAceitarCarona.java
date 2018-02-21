@@ -6,19 +6,20 @@ import android.widget.Toast;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
 import br.com.alysondantas.qcarona.QueroCaronaFragment;
+import br.com.alysondantas.qcarona.model.Protocolo;
 
 /**
- * Created by marco on 15/02/2018.
+ * Created by marco on 21/02/2018.
  */
 
-public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object, String> {
-    QueroCaronaFragment frag;
+public class AsyncTaskAceitarCarona extends AsyncTask<String, Object, String> {
 
-    public AsyncTaskBuscarCaronasDisponiveis(QueroCaronaFragment frag) {
-        this.frag = frag;
+    private QueroCaronaFragment fragment;
+
+    public AsyncTaskAceitarCarona(QueroCaronaFragment context) {
+
     }
 
     @Override
@@ -30,17 +31,21 @@ public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object,
             int porta = Integer.parseInt(portaS);
             String pack = strings[2];
             Socket rec = new Socket(ip,porta);
+            //Enviando o nome do arquivo a ser baixado do servidor
             ObjectOutputStream saida = new ObjectOutputStream(rec.getOutputStream());
             saida.writeObject(pack);
+            //saida.flush();
 
             ObjectInputStream entrada = new ObjectInputStream(rec.getInputStream());//recebo o pacote do cliente
             Object object = entrada.readObject();
+            publishProgress();
             if ((object != null) && (object instanceof String)) {
                 recebido = (String) object;
             }
             saida.close();//fecha a comunicação com o servidor
             entrada.close();
             rec.close();
+
 
         }catch(Exception e){
             e.printStackTrace();
@@ -50,23 +55,16 @@ public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object,
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if(s != null) {
-            String[] reuslt = s.split("\\|");
-            if (!reuslt[1].equals("")) {
-                String[] caronas = reuslt[1].split(";");
-                ArrayList<String> array = new ArrayList<>();
-                for (String c : caronas){
-                    array.add(c);
-                }
-                frag.setLista(array);
-                publishProgress();
-            }else {
-                Toast.makeText(frag.getContext(), "Não foi encontrado nenhuma carona para essas cidades", Toast.LENGTH_LONG).show();
+        if (s != null) {
+            String[] result = s.split("\\|");
+            if (result[0].equals(Protocolo.Notificacao.RESPOSTA_CONFIRMAR_CARONA+"")) {
+                Toast.makeText(fragment.getContext(), "Reserva de carona realizada com sucesso", Toast.LENGTH_LONG).show();
+            } else if (result[1].trim().equals("ERRO")) {
+                Toast.makeText(fragment.getContext(), "Erro ao reservar.", Toast.LENGTH_LONG).show();
             }
         } else {
-            Toast.makeText(frag.getContext(), "Não foi encontrado nenhuma carona para essas cidades", Toast.LENGTH_LONG).show();
+            Toast.makeText(fragment.getContext(), "Houve um erro.", Toast.LENGTH_LONG).show();
         }
-
+        super.onPostExecute(s);
     }
 }

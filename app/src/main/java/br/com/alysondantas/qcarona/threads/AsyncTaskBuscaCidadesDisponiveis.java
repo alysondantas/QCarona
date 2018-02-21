@@ -52,8 +52,8 @@ public class AsyncTaskBuscaCidadesDisponiveis extends AsyncTask<String, Object, 
 
     @Override
     protected void onPostExecute(String s) {
-        String[] resultado = s.split("\\|");
-        if (resultado[0].equals(Protocolo.Notificacao.RETORNO_CIDADES_DISPONIVEIS)) {
+        if(s != null) {
+            String[] resultado = s.split("\\|");
             String[] cidades = resultado[1].split(";");
             List<String> cidadesList = new ArrayList<>();
             for (String cidade : cidades) {
@@ -61,7 +61,7 @@ public class AsyncTaskBuscaCidadesDisponiveis extends AsyncTask<String, Object, 
             }
             frag.adicionarCidadesOrigem(cidadesList);
             frag.adicionarCidadesDestino(cidadesList);
+            super.onPostExecute(s);
         }
-        //super.onPostExecute(s);
     }
 }

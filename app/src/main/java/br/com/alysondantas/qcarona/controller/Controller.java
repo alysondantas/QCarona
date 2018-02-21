@@ -18,16 +18,20 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
 import br.com.alysondantas.qcarona.AreaRestritaActivity;
+import br.com.alysondantas.qcarona.DarCaronaFragment;
 import br.com.alysondantas.qcarona.InicioFragment;
 import br.com.alysondantas.qcarona.MinhasCaronasFragment;
 import br.com.alysondantas.qcarona.QueroCaronaFragment;
 import br.com.alysondantas.qcarona.model.Protocolo;
 import br.com.alysondantas.qcarona.model.Usuario;
+import br.com.alysondantas.qcarona.threads.AsyncTaskAceitarCarona;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscaCidadesDisponiveis;
 import br.com.alysondantas.qcarona.threads.AsyncTaskAceitaSolicitacaoAmizade;
+import br.com.alysondantas.qcarona.threads.AsyncTaskBuscaCidadesDisponiveisSubmeter;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarAmigos;
 import br.com.alysondantas.qcarona.threads.AsyncTaskBuscarCaronasDisponiveis;
 import br.com.alysondantas.qcarona.threads.AsyncTaskCadastra;
+import br.com.alysondantas.qcarona.threads.AsyncTaskCaronasAndamento;
 import br.com.alysondantas.qcarona.threads.AsyncTaskDesFazAmigo;
 import br.com.alysondantas.qcarona.threads.AsyncTaskEditarPerfil;
 import br.com.alysondantas.qcarona.threads.AsyncTaskLoginWakeup;
@@ -37,6 +41,7 @@ import br.com.alysondantas.qcarona.threads.AsyncTaskObtemPerfilAmigo;
 import br.com.alysondantas.qcarona.threads.AsyncTaskObtemSolicitacoes;
 import br.com.alysondantas.qcarona.threads.AsyncTaskRealizaLogin;
 import br.com.alysondantas.qcarona.threads.AsyncTaskSolicitacaoAmizade;
+import br.com.alysondantas.qcarona.threads.AsyncTaskSubmeterCaronas;
 import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 
 /**
@@ -46,7 +51,7 @@ import br.com.alysondantas.qcarona.threads.ThreadConexaoServidor;
 public class Controller {
     private static Controller unicaInstancia;//variavel do controller de unica instancia
     //private String ip = "149.56.200.229";
-    private String ip = "192.168.0.107";
+    private String ip = "192.168.0.102";
     private int porta = 1099;
     private Context context;
     private final static String ARQUIVO_PREFERENCIA = "Login";
@@ -283,6 +288,26 @@ public class Controller {
         solicitacao.execute(parametros);
     }
 
+    public void atualizarCidadesDisponiveisSubmeter(DarCaronaFragment frag){
+        String pack = Protocolo.Solicitacao.CIDADES_DISPONIVEIS+"|";
+        AsyncTaskBuscaCidadesDisponiveisSubmeter solicitacao = new AsyncTaskBuscaCidadesDisponiveisSubmeter(frag);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
+    public void submeterCaronaDisponivel(DarCaronaFragment frag, String cidadeOrigem,String cidadeDestino, String data, String hora){
+        String pack = Protocolo.Solicitacao.SUBMETER_CARONA+"|"+getId()+"|"+cidadeOrigem+"|"+cidadeDestino+"|"+data+"|"+hora;
+        AsyncTaskSubmeterCaronas solicitacao = new AsyncTaskSubmeterCaronas(frag);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
     public void verificarCaronaDisponivel(QueroCaronaFragment frag, String cidadeOrigem, String cidadeDestino) {
         String pack = Protocolo.Solicitacao.CARONAS_DISPONIVEIS+"|"+cidadeOrigem+"|"+cidadeDestino;
         AsyncTaskBuscarCaronasDisponiveis solicitacao = new AsyncTaskBuscarCaronasDisponiveis(frag);
@@ -313,6 +338,26 @@ public class Controller {
     public void enviarAceitaAmizade(Context context, int idUsuario, int idSolicitacao) {
         String pack = Protocolo.Solicitacao.ACEITA_SOLICITACAO+"|"+id+"|"+idUsuario + "|" + idSolicitacao;
         AsyncTaskAceitaSolicitacaoAmizade solicitacao = new AsyncTaskAceitaSolicitacaoAmizade(context);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
+    public void confimarCarona(QueroCaronaFragment frag, String idCarona) {
+        String pack = Protocolo.Solicitacao.CONFIRMAR_CARONA+"|"+getId()+"|"+idCarona;
+        AsyncTaskAceitarCarona solicitacao = new AsyncTaskAceitarCarona(frag);
+        String[] parametros = new String[3];
+        parametros[0] = ip;
+        parametros[1] = porta+"";
+        parametros[2] = pack;
+        solicitacao.execute(parametros);
+    }
+
+    public void caronasAndamento(MinhasCaronasFragment minhasCaronasFragment) {
+        String pack = Protocolo.Solicitacao.CARONAS_ANDAMENTO+"|"+getId();
+        AsyncTaskCaronasAndamento solicitacao = new AsyncTaskCaronasAndamento(minhasCaronasFragment);
         String[] parametros = new String[3];
         parametros[0] = ip;
         parametros[1] = porta+"";

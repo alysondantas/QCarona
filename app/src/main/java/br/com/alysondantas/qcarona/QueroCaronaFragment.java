@@ -64,9 +64,10 @@ public class QueroCaronaFragment extends Fragment {
         ArrayList usuariosExib = new ArrayList<>();
         ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, usuariosExib);
         listViewCaronas.setAdapter(arrayAdapter);
+        final QueroCaronaFragment tt = this;
         listViewCaronas.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
                 // pega o o item selecionado com os dados da pessoa
                 new AlertDialog.Builder(getContext())
                         .setTitle("Carona Ofertada")
@@ -75,6 +76,9 @@ public class QueroCaronaFragment extends Fragment {
                                 new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialogInterface, int i) {
+                                        final String user = (String) listViewCaronas.getItemAtPosition(position);
+                                        String[] select = user.toString().split(",");
+                                        controller.confimarCarona(tt,select[0]);
                                         Toast.makeText(getContext(),"Enviando confirmação de carona", Toast.LENGTH_SHORT).show();
                                     }
                                 })

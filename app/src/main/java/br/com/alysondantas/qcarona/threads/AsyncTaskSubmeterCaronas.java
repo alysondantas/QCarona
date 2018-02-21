@@ -6,18 +6,17 @@ import android.widget.Toast;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
-import java.util.ArrayList;
 
-import br.com.alysondantas.qcarona.QueroCaronaFragment;
+import br.com.alysondantas.qcarona.DarCaronaFragment;
+import br.com.alysondantas.qcarona.model.Protocolo;
 
 /**
- * Created by marco on 15/02/2018.
+ * Created by marco on 20/02/2018.
  */
 
-public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object, String> {
-    QueroCaronaFragment frag;
-
-    public AsyncTaskBuscarCaronasDisponiveis(QueroCaronaFragment frag) {
+public class AsyncTaskSubmeterCaronas extends AsyncTask<String, Object, String> {
+    private DarCaronaFragment frag;
+    public AsyncTaskSubmeterCaronas(DarCaronaFragment frag) {
         this.frag = frag;
     }
 
@@ -32,7 +31,6 @@ public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object,
             Socket rec = new Socket(ip,porta);
             ObjectOutputStream saida = new ObjectOutputStream(rec.getOutputStream());
             saida.writeObject(pack);
-
             ObjectInputStream entrada = new ObjectInputStream(rec.getInputStream());//recebo o pacote do cliente
             Object object = entrada.readObject();
             if ((object != null) && (object instanceof String)) {
@@ -41,7 +39,6 @@ public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object,
             saida.close();//fecha a comunicação com o servidor
             entrada.close();
             rec.close();
-
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -50,23 +47,10 @@ public class AsyncTaskBuscarCaronasDisponiveis extends AsyncTask<String, Object,
 
     @Override
     protected void onPostExecute(String s) {
-        super.onPostExecute(s);
-        if(s != null) {
-            String[] reuslt = s.split("\\|");
-            if (!reuslt[1].equals("")) {
-                String[] caronas = reuslt[1].split(";");
-                ArrayList<String> array = new ArrayList<>();
-                for (String c : caronas){
-                    array.add(c);
-                }
-                frag.setLista(array);
-                publishProgress();
-            }else {
-                Toast.makeText(frag.getContext(), "Não foi encontrado nenhuma carona para essas cidades", Toast.LENGTH_LONG).show();
-            }
-        } else {
-            Toast.makeText(frag.getContext(), "Não foi encontrado nenhuma carona para essas cidades", Toast.LENGTH_LONG).show();
+        String[] part = s.split("\\|");
+        if(part[0].equals(Protocolo.Notificacao.RESPOSTA_SUBMETER_CARONA+"")){
+            Toast.makeText(frag.getContext(), "Sua carona ja foi publicada", Toast.LENGTH_LONG).show();
         }
-
+        super.onPostExecute(s);
     }
 }
